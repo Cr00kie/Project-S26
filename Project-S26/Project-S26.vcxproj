@@ -17,7 +17,6 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -53,37 +52,58 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" >
+  <ImportGroup Label="Shared">
   </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>Project-S26-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>Project-S26-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>Project-S26-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>Project-S26-$(Configuration)</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL3.dll;SDL3_image.dll;SDL3_mixer.dll;SDl3_ttf.dll;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/DLLs/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,12 +114,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL3.dll;SDL3_image.dll;SDL3_mixer.dll;SDl3_ttf.dll;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/DLLs/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,10 +132,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL3_image-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_mixer-3.1.2\lib\$(Platform);$(SolutionDir)lib\SDL3-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_ttf-3.2.2\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,16 +150,70 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL3_image-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_mixer-3.1.2\lib\$(Platform);$(SolutionDir)lib\SDL3-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_ttf-3.2.2\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\AppFacadeService.cpp" />
+    <ClCompile Include="source\Audio\AudioManager.cpp" />
+    <ClCompile Include="source\Resources\Sound.cpp" />
+    <ClCompile Include="source\Events\InputManager.cpp" />
+    <ClCompile Include="source\Resources\ResourceLoaders\FontLoader.cpp" />
+    <ClCompile Include="source\Resources\ResourceLoaders\SoundLoader.cpp" />
+    <ClCompile Include="source\Resources\ResourceLoaders\TextureLoader.cpp" />
+    <ClCompile Include="source\Resources\ResourceManager.cpp" />
+    <ClCompile Include="source\Scenes\SceneManager.cpp" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Resources\Font.cpp" />
+    <ClCompile Include="source\Resources\Texture.cpp" />
+    <ClCompile Include="source\SDLApplication.cpp" />
+    <ClCompile Include="source\Tweens\Tween.cpp" />
+    <ClCompile Include="source\Tweens\TweenManager.cpp" />
+    <ClCompile Include="source\UI\BasicUI\Image.cpp" />
+    <ClCompile Include="source\UI\BasicUI\Nineslice.cpp" />
+    <ClCompile Include="source\UI\BasicUI\Rect.cpp" />
+    <ClCompile Include="source\UI\BasicUI\TextLabel.cpp" />
+    <ClCompile Include="source\UI\Buttons\Button.cpp" />
+    <ClCompile Include="source\UI\UIElement.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\AppFacadeService.h" />
+    <ClInclude Include="source\Audio\AudioManager.h" />
+    <ClInclude Include="source\Resources\Sound.h" />
+    <ClInclude Include="source\Events\Event.h" />
+    <ClInclude Include="source\Events\EventBus.h" />
+    <ClInclude Include="source\Events\InputManager.h" />
+    <ClInclude Include="source\Resources\ResourceLoaders\FontLoader.h" />
+    <ClInclude Include="source\Resources\ResourceLoaders\ResourceLoader.h" />
+    <ClInclude Include="source\Resources\ResourceLoaders\SoundLoader.h" />
+    <ClInclude Include="source\Resources\ResourceLoaders\TextureLoader.h" />
+    <ClInclude Include="source\Resources\ResourceManager.h" />
+    <ClInclude Include="source\Scenes\SceneManager.h" />
+    <ClInclude Include="source\Resources\BasicResource.h" />
+    <ClInclude Include="source\Resources\Font.h" />
+    <ClInclude Include="source\Resources\Texture.h" />
+    <ClInclude Include="source\SDLApplication.h" />
+    <ClInclude Include="source\Tools\checkML.h" />
+    <ClInclude Include="source\Tools\ReactiveProperty.h" />
+    <ClInclude Include="source\Tools\ServiceLocator.h" />
+    <ClInclude Include="source\Tweens\Tween.h" />
+    <ClInclude Include="source\Tweens\TweenManager.h" />
+    <ClInclude Include="source\UI\BasicUI\Image.h" />
+    <ClInclude Include="source\UI\BasicUI\Nineslice.h" />
+    <ClInclude Include="source\UI\BasicUI\Rect.h" />
+    <ClInclude Include="source\UI\BasicUI\TextLabel.h" />
+    <ClInclude Include="source\UI\Buttons\Button.h" />
+    <ClInclude Include="source\UI\UIElement.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
