@@ -40,13 +40,13 @@ void UIElement::cleanUpDeadElements()
 
 UIElement::UIElement(float x, float y, float width, float height, float rotation, float zOrder)
 	:	m_bIsVisible(true),
-		m_bDead(false),
-		m_fX(x), m_fY(y), 
+		m_bDead(false), 
 		m_fW(width), m_fH(height),
-		m_fRotation(rotation),
 		m_fZOrder(zOrder),
 		m_parent(nullptr)
 {
+	float rot = (rotation * std::numbers::pi_v<float>) / 180.f;
+	m_transform = Mat3f::translation({ x, y }) * Mat3f::rotation(rot);
 }
 
 UIElement::~UIElement()
@@ -54,30 +54,21 @@ UIElement::~UIElement()
 	clearContainer();
 }
 
-float UIElement::getGlobalX() const
+Mat3f UIElement::getGlobalTransform() const
 {
-	if (!m_parent) return m_fX;
+	if (m_parent) return m_parent->getGlobalTransform() * m_transform;
 
-	float rad = m_parent->getGlobalRotation() * std::numbers::pi_v<float> / 180.0f;
-
-	float rotatedX = m_fX * cos(rad) - m_fY * sin(rad);
-	return (rotatedX + m_parent->getGlobalX());
+	return m_transform;
 }
 
-float UIElement::getGlobalY() const
+Vec2f UIElement::getGlobalPosition() const
 {
-	if (!m_parent) return m_fY;
-
-	float rad = m_parent->getGlobalRotation() * std::numbers::pi_v<float> / 180.0f;
-
-	float rotatedY = m_fX * std::sin(rad) + m_fY * std::cos(rad);
-	return (rotatedY + m_parent->getGlobalY());
+	return getGlobalTransform() * Vec2f(0, 0);
 }
 
-float UIElement::getGlobalRotation() const
+Vec2f UIElement::getPosition() const
 {
-	if (!m_parent) return m_fRotation;
-	return m_fRotation + m_parent->getGlobalRotation();
+	return Vec2f(m_transform[2], m_transform[5]);
 }
 
 void UIElement::setZOrder(float z)
@@ -120,12 +111,8 @@ void UIElement::update(float dt)
 	}
 }
 
-void UIElement::render(float parentX, float parentY, float parentRot)
+void UIElement::render(const Mat3f& parentTransform)
 {
-	float x = m_fX + parentX;
-	float y = m_fY + parentY;
-	float rot = m_fRotation + parentRot;
-
 	// If container should resort, resort and reset flag
 	if (m_bNeedsZSort)
 	{
@@ -136,7 +123,7 @@ void UIElement::render(float parentX, float parentY, float parentRot)
 	// Render elements in order
 	for (auto it = m_children.rbegin(); it != m_children.rend(); ++it)
 	{
-		if ((*it)->isVisible()) (*it)->render(x, y, rot);
+		if ((*it)->isVisible()) (*it)->render(parentTransform * m_transform);
 	}
 }
 
@@ -168,20 +155,8 @@ UIElement* UIElement::findEventTarget(float x, float y)
 
 bool UIElement::isMouseInside(float x, float y)
 {
-	float rad = getGlobalRotation() * std::numbers::pi_v<float> / 180.0f;
-
-	// Mouse relative to the button's center
-	float rx = x - getGlobalX();
-	float ry = y - getGlobalY();
-
-	//Rotate the point by the negative angle of the button
-	float localX = rx * cos(-rad) - ry * sin(-rad);
-	float localY = rx * sin(-rad) + ry * cos(-rad);
-
-	SDL_FPoint point = { localX, localY };
-	SDL_FRect area = { -m_fW / 2 ,-m_fH / 2, m_fW, m_fH };
-
-	// Check if mouse clicked hit area
-	bool ret = SDL_PointInRectFloat(&point, &area);
-	return ret;
+	// Transform world point into local space using inverse
+	Vec2f local = m_transform.inversed() * Vec2f(x, y);
+	return local.getX() >= 0 && local.getX() <= m_fW
+		&& local.getY() >= 0 && local.getY() <= m_fH;
 }

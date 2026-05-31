@@ -6,8 +6,7 @@
 
 Nineslice::Nineslice(float x, float y, float w, float h, const std::string& id, float leftWidth, float rightWidth, float topHeight, float bottomHeight, float scale)
 	:
-	UIElement(x, y),
-	m_fW(w), m_fH(h),
+	UIElement(x, y, w, h),
 	m_fLeftWidth(leftWidth), m_fRightWidth(rightWidth),
 	m_fTopHeight(topHeight), m_fBottomHeight(bottomHeight),
 	m_fScale(scale),
@@ -36,16 +35,18 @@ const std::string& Nineslice::getTexture() const
 }
 
 void
-Nineslice::render(float parentX, float parentY, float parentRot) {
+Nineslice::render(const Mat3f& parentTransform) {
 	// Set color and alpha modulations
 	m_pTexture->setTextureColor(m_RGBAModulation);
 	m_pTexture->setTextureAlpha(m_RGBAModulation.a);
 
 	// Get element global position
-	float x = m_fX + parentX;
-	float y = m_fY + parentY;
+	Mat3f globalTransform = parentTransform * m_transform;
+	Vec2f position = globalTransform.getTranslation();
 
 	// Render element as nineslice
-	m_pTexture->render9Grid({ x - m_fW / 2, y - m_fH / 2, m_fW, m_fH },
+	m_pTexture->render9Grid({ position.getX() - m_fW / 2, position.getY() - m_fH / 2, m_fW, m_fH},
 		m_fLeftWidth, m_fRightWidth, m_fTopHeight, m_fBottomHeight, m_fScale);
+
+	UIElement::render(parentTransform);
 }

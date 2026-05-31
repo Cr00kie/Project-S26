@@ -3,6 +3,7 @@
 #include "../UIElement.h"
 #include "../../Resources/Texture.h"
 #include "../../Tweens/Tween.h"
+#include "../../Math/Mat3.h"
 
 #include <string>
 #include <vector>
@@ -50,8 +51,6 @@ protected:
 	std::string m_sTextureID;
 	//If the image is flipped horizontally when rendered
 	bool m_bIsFlipped;
-	//The rotation angle of the image in degrees
-	float m_fRotation;
 	//The scale of the image when rendered
 	float m_fScale;
 	//The width and height of the image when rendered
@@ -79,12 +78,6 @@ public:
 	//Getters
 	//It returns the ID of the texture used to render the image
 	const std::string& getTexture() const;
-	//It returns the rotation of the image when rendered
-	inline float getRotation() const { return m_fRotation; }
-	//It returns the width of the image when rendered
-	inline float getWidth() const { return m_fW; }
-	//It returns the height of the image when rendered
-	inline float getHeight() const { return m_fH; }
 	//It returns the scale of the image when rendered
 	inline float getScale() const { return m_fScale; }
 	//It returns the color modulation of the image when rendered
@@ -97,12 +90,6 @@ public:
 	//Setters
 	//It changes the texture of the image to the texture with the given ID
 	void setTexture(const std::string& id);
-	//It changes the rotation of the image when rendered
-	inline void setRotation(float r) { m_fRotation = r; }
-	//It changes the width of the image when rendered
-	inline void setWidth(float w) { m_fW = w; }
-	//It changes the height of the image when rendered
-	inline void setHeight(float h) { m_fH = h; }
 	//It changes the scale of the image when rendered
 	inline void setScale(float s) { m_fScale = s; }
 	//It changes the color modulation of the image when rendered
@@ -116,6 +103,6 @@ public:
 	}
 
 	//renders the image
-	void render(float parentX, float parentY, float parentRot) override;
+	void render(const Mat3f& parentTransform) override;
 };
 

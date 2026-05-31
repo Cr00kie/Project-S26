@@ -7,7 +7,7 @@
 #include <iostream>
 
 Image::Image(float x, float y, const std::string& id, float scale, bool isFlipped, float rotation)
-	: UIElement(x, y), m_bIsFlipped(isFlipped), m_fRotation(rotation), m_fScale(scale), m_RGBAModulation({ 255,255,255,255 })
+	: UIElement(x, y, 0, 0, rotation), m_bIsFlipped(isFlipped), m_fScale(scale), m_RGBAModulation({ 255,255,255,255 })
 {
 	setTexture(id);
 }
@@ -79,21 +79,21 @@ void Image::setAnimationData(std::optional<Animation> anim) {
 }
 
 void
-Image::render(float parentX, float parentY, float parentRot) {
+Image::render(const Mat3f& parentTransform) {
 	// Set color and alpha modulations
 	m_pTexture->setTextureColor(m_RGBAModulation);
 	m_pTexture->setTextureAlpha(m_RGBAModulation.a);
 
 	// Get element global position and rotation
-	float rotation = m_fRotation + parentRot;
-	float x = m_fX + parentX;
-	float y = m_fY + parentY;
+	Mat3f globalTransform = parentTransform * m_transform;
+	float rotation = globalTransform.getRotation();
+	Vec2f position = globalTransform.getTranslation();
 
 	// Render element
 	if (!m_Animation.has_value())
 	{
 		m_pTexture->render(
-			{ x - (m_fW * m_fScale) / 2, y - (m_fH * m_fScale) / 2 ,(m_fW * m_fScale), (m_fH * m_fScale) },
+			{ position.getX() - (m_fW * m_fScale) / 2, position.getY() - (m_fH * m_fScale) / 2 ,(m_fW * m_fScale), (m_fH * m_fScale)},
 			(m_bIsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE),
 			rotation
 		);
@@ -115,9 +115,11 @@ Image::render(float parentX, float parentY, float parentRot) {
 
 		m_pTexture->render(
 			sourceRect,
-			{ x - (frameWidth * m_fScale) / 2, y - (frameHeight * m_fScale) / 2 ,(frameWidth * m_fScale), (frameHeight * m_fScale) },
+			{ position.getX() - (frameWidth * m_fScale) / 2, position.getY() - (frameHeight * m_fScale) / 2 ,(frameWidth * m_fScale), (frameHeight * m_fScale)},
 			(m_bIsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE),
 			rotation
 		);
 	}
+
+	UIElement::render(parentTransform);
 }

@@ -1,5 +1,16 @@
 {
-  "Textures": [],
+  "Textures": [
+    {
+      "id": "test",
+      "path" : "assets/Images/test.png"
+    }
+  ],
   "Sounds": [],
-  "Fonts": []
+  "Fonts": [
+    {
+      "id" : "NunitoSans",
+      "path" : "assets/Fonts/NunitoSans.ttf"
+    }
+
+  ]
 }

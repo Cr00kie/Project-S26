@@ -42,10 +42,6 @@ public:
 	//by sending a fake mouse move event with the last mouse coordinates,
 	virtual void refreshHitBox();
 
-	inline float getRotation() const {
-		return m_fRotation;
-	}
-
 private:
 
 	//Lists of callbacks for the different events of the button
@@ -72,5 +68,5 @@ private:
 
 	//Event handler,
 	//called by the Scene when it receives an event from the input manager
-	virtual void onInput(Event& ev);
+	virtual void onEvent(Event& ev);
 };

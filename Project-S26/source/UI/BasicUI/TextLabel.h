@@ -85,7 +85,7 @@ public:
 
 	// Render the text label,
     // it will render each glyph in the text with its corresponding style
-    void render(float parentX, float parentY, float parentRot) override;
+    void render(const Mat3f& parentTransform) override;
 
 	// Set the text of the text label,
     void setText(const std::string& newText);
@@ -116,21 +116,8 @@ public:
 	// Set the scale of the text label in y direction
     inline void setScaleY(float y)                { m_fScaleY = y; }
 
-	// Set the rotation of the text label in degrees
-    inline void setRotation(float rotation) { m_fRotation = rotation; }
-	// Get the rotation of the text label in degrees
-    inline float getRotation() const        { return m_fRotation; }
-
-	// Get the Width of the text label, it will be used to wrap the text if it's greater than 0
-    float getWidth() const                { return m_fW; }
-    // Get the Height of the text label
-    float getHeight() const               { return m_fH; }
     // Get the Height after wrapping. It can be more or less than default height, depending on glyph size
     float getTotalHeight() const          { return m_fTotalHeight; }
-	// Set the Width of the text label, it will be used to wrap the text if it's greater than 0
-    void setWidth(float w)                { m_fW = w; }
-	// Set the Height of the text label
-    void setHeight(float h)               { m_fH = h; }
     void setColor(int r, int g, int b, int a);
 
 private:
@@ -146,7 +133,7 @@ private:
 					const TextToken& token, const SDL_FRect& styledCaret, const SDL_FRect& baseCaret, float rotation) const;
 	
 	// The width and height of the text label, it will be used to wrap the text if it's greater than 0
-    float                   m_fW, m_fH, m_fTotalHeight;
+    float                   m_fTotalHeight;
 	// The font used to render the text
     Font*                   m_font;
 	// The ID of the font used to render the text,
@@ -158,8 +145,6 @@ private:
     // it holds the tokens of each line and the total width of each line
     std::vector<TextLine>  m_tokenizedText;
 
-	// The rotation of the text label in degrees
-    float                   m_fRotation = 0;
 	// The text alignment of the text label,
     // it will be used to align the text when rendering
     TextAlign               m_TextAlignment;

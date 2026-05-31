@@ -17,9 +17,7 @@ TextLabel::TextLabel(
 	float lineSpacing, float wordSpacing, float letterSpacing,
 	int visibleGlyphCount
 )
-	: UIElement(x, y)
-	, m_fW(boxW), m_fH(boxH)
-	, m_fRotation(rotation)
+	: UIElement(x, y, boxW, boxH, rotation)
 	, m_fScaleX(scale)
 	, m_fScaleY(scale)
 	, m_TextAlignment(alignment)
@@ -58,6 +56,8 @@ TextLabel::setText(const std::string& newText) {
 	const bool wasShowingAllGlyphs = (m_visibleGlyphCount < 0 || m_visibleGlyphCount >= m_glyphCount);
 
 	m_glyphCount = 0;
+
+	m_text = newText;
 
 	TextStyle currentGlyphStyle; // default is white text
 
@@ -273,14 +273,17 @@ void TextLabel::renderGlyph(float x, float y, const TextToken& token, const SDL_
 }
 
 void
-TextLabel::render(float parentX, float parentY, float parentRot) {
+TextLabel::render(const Mat3f& parentTransform) {
 	if (!m_font || m_text.empty()) return;
 	if (m_fW <= 0 || m_fH <= 0) return;
 
-	float globX = m_fX + parentX;
-	float globY = m_fY + parentY;
-	float rotation = m_fRotation + parentRot;
-	float angleRad = rotation * std::numbers::pi_v<float> / 180.f;
+	Mat3f globalTransform = parentTransform * m_transform;
+	Vec2f position = globalTransform.getTranslation();
+	float globX = position.getX();
+	float globY = position.getY();
+	float rotation = globalTransform.getRotation();
+	float angleRad = globalTransform.getAngle();
+
 	float rotCos = std::cos(angleRad);
 	float rotSin = std::sin(angleRad);
 
@@ -314,6 +317,8 @@ TextLabel::render(float parentX, float parentY, float parentRot) {
 				? m_fLetterSpacing : m_fWordSpacing);
 		}
 	}
+
+	UIElement::render(parentTransform);
 }
 
 float TextLabel::CalculateNextWordSize(int wordStartIdx, const std::vector<TextToken>& tokens)

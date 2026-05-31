@@ -167,6 +167,7 @@ void SDLApplication::render()
 
 void SDLApplication::quit()
 {
+	ServiceLocator::unregister<SceneManager>();
 
 	// Clear Event Bus events
 	EventBus* eb = ServiceLocator::tryGet<EventBus>();
@@ -181,7 +182,6 @@ void SDLApplication::quit()
 	ServiceLocator::unregister<ResourceManager>();
 	ServiceLocator::unregister<EventBus>();
 	ServiceLocator::unregister<AppFacadeService>();
-	ServiceLocator::unregister<SceneManager>();
 	ServiceLocator::clear();
 
 	// Destroy renderer

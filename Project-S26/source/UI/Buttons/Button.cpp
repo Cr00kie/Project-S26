@@ -37,7 +37,7 @@ Subscription Button::addOnHoldListener(std::function<void()> callback)
 	return Subscription([this, it]() { m_onHoldCallbacks.erase(it); });
 }
 
-void Button::onInput(Event& ev)
+void Button::onEvent(Event& ev)
 {
     if (!m_bInteractive) return;
     if (ev.getType() != Event::Type::MOUSE) return;
@@ -109,5 +109,5 @@ void Button::onInput(Event& ev)
 
 void Button::refreshHitBox() {
 	Event ev = Event(MouseEvent(MouseEvent::State::MOVED, m_fLastMouseX, m_fLastMouseY));
-	onInput(ev);
+	onEvent(ev);
 }

@@ -26,10 +26,6 @@ private:
 	float m_fScaleX;
 	//The scale of the rectangle in the x and y direction
 	float m_fScaleY;
-	//The width and height of the rectangle
-	float m_fH;
-	//The width and height of the rectangle
-	float m_fW;
 
 	//It loads the texture of the rectangle with the given color
 	void loadColor(const SDL_Color& color);
@@ -52,34 +48,22 @@ public:
 	//It changes the color of the rectangle by loading a new texture with the given color
 	void setColor(const SDL_Color& color);
 
-	//It changes the rotation of the rectangle when rendered
-	inline void setRotation(float r) { m_fRotation = r; }
 	//It changes the ScaleX of the rectangle when rendered
 	inline void setScaleX(float s) { m_fScaleX = s; }
 	//It changes the ScaleY of the rectangle when rendered
 	inline void setScaleY(float s) { m_fScaleY = s; }
-	//It changes the width of the rectangle when rendered
-	inline void setWidth(float w) { m_fW = w; }
-	//It changes the height of the rectangle when rendered
-	inline void setHeight(float h) { m_fH = h; }
 	//It changes whether the rectangle is flipped horizontally when rendered
 	inline void setFlipped(bool flipped) { m_bIsFlipped = flipped; }
 
 	//Getters
-	//It returns the rotation of the rectangle when rendered
-	inline float getRotation() const { return m_fRotation; }
 	//It returns the ScaleX of the rectangle when rendered
 	inline float getScaleX() const { return m_fScaleX; }
 	//It returns the ScaleY of the rectangle when rendered
 	inline float getScaleY() const { return m_fScaleY; }
-	//It returns the width of the rectangle when rendered
-	inline float getWidth() const { return m_fW; }
-	//It returns the height of the rectangle when rendered
-	inline float getHeight() const { return m_fH; }
 	//It returns whether the rectangle is flipped horizontally when rendered
 	inline bool isFlipped() const { return m_bIsFlipped; }
 
 	//Render the rectangle
-	void render(float parentX, float parentY, float parentRot) override;
+	void render(const Mat3f& parentTransform) override;
 };
 

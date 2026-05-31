@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "../Events/Event.h"
 #include "../UI/UIElement.h"
+#include "../Math/Mat3.h"
 
 SceneManager::SceneManager() :
 	m_currentScene(nullptr)
@@ -37,7 +38,7 @@ void SceneManager::onEvent(Event& ev)
 
 void SceneManager::render()
 {
-	m_currentScene->render(0, 0, 0);
+	m_currentScene->render(Mat3f(1.f));
 }
 
 void SceneManager::update(float dt)

@@ -19,8 +19,6 @@ private:
 	//used to check if the texture needs to be updated when setTexture is called
 	std::string m_sTextureID;
 
-	//The width and height of the nineslice
-	float m_fW, m_fH;
 	//The width of the left and right edges of the nineslice
 	float m_fLeftWidth;
 	//The width of the left and right edges of the nineslice
@@ -60,10 +58,6 @@ public:
 	//Getters
 	//It returns the scale of the nineslice when rendered
 	inline float getScale() const { return m_fScale; }
-	//It returns the width of the nineslice when rendered
-	inline float getWidth() const { return m_fW; }
-	//It returns the height of the nineslice when rendered
-	inline float getHeight() const { return m_fH; }
 	//It returns the width of the left edge of the nineslice when rendered
 	inline float getLeftWidth() const { return m_fLeftWidth; }
 	//It returns the width of the right edge of the nineslice when rendered
@@ -78,10 +72,6 @@ public:
 	//Setters
 	//It changes the scale of the nineslice when rendered
 	inline void setScale(float s) { m_fScale = s;}
-	//It changes the width of the nineslice when rendered
-	inline void setWidth(float w) { m_fW = w; }
-	//It changes the height of the nineslice when rendered
-	inline void setHeight(float h) { m_fH = h; }
 	//It changes the width of the left edge of the nineslice when rendered
 	inline void setLeftWidth(float lw) { m_fLeftWidth = lw; }
 	//It changes the width of the right edge of the nineslice when rendered
@@ -95,6 +85,6 @@ public:
 	
 	//It renders the nineslice by rendering the 9 parts of the texture
 	//with the appropriate scaling and color modulation
-	void render(float parentX, float parentY, float parentRot) override;
+	void render(const Mat3f& parentTransform) override;
 };
 

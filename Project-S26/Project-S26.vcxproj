@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Math\Mat3.cpp" />
     <ClCompile Include="source\AppFacadeService.cpp" />
     <ClCompile Include="source\Audio\AudioManager.cpp" />
     <ClCompile Include="source\Resources\Sound.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="source\UI\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Math\Mat3.h" />
     <ClInclude Include="source\AppFacadeService.h" />
     <ClInclude Include="source\Audio\AudioManager.h" />
     <ClInclude Include="source\Resources\Sound.h" />
@@ -213,6 +215,8 @@
     <ClInclude Include="source\UI\BasicUI\TextLabel.h" />
     <ClInclude Include="source\UI\Buttons\Button.h" />
     <ClInclude Include="source\UI\UIElement.h" />
+    <ClInclude Include="source\Math\Vec2.h" />
+    <ClInclude Include="source\Math\Vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

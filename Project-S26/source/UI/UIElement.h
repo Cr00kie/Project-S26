@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../Events/Event.h"
+#include "../Math/Mat3.h"
 
 // TODO: CHANGE TO USE MATRIXES
 class UIElement
@@ -26,17 +27,11 @@ protected:
 	bool m_bIsVisible;
 	//If the element is marked as dead.
 	bool m_bDead;
-	//The position of the element relative to its container
-	float m_fX;
-	//The position of the element relative to its container
-	float m_fY;
-	//The position of the element relative to its container
-	float m_fZOrder;
-	//The rotation angle of the container in degrees.
-	float m_fRotation;
 
-	float m_fW;
-	float m_fH;
+	Mat3f m_transform;
+	// Vec2f m_scale; USE THIS IF WE EVER WANT TO SCALE SHIT
+	float m_fW, m_fH;
+	float m_fZOrder;
 
 	//Sort the elements in the container by their Z value (from low to high)
 	void sortChildrenByZ();
@@ -51,11 +46,11 @@ public:
 	UIElement(float x, float y, float width = 0, float height = 0, float rotation = 0, float zOrder = 0);
 	virtual ~UIElement();
 
-	float getX() const { return m_fX; };
-	void setX(float x) { m_fX = x; };
+	float getX() const { return m_transform[2]; };
+	void setX(float x) { m_transform[2] = x; };
 
-	float getY() const { return m_fY; };
-	void setY(float y) { m_fY = y; };
+	float getY() const { return m_transform[5]; };
+	void setY(float y) { m_transform[5] = y; };
 
 	float getWidth() const { return m_fW; }
 	void setWidth(float w) { m_fW = w; }
@@ -63,15 +58,17 @@ public:
 	float getHeight() const { return m_fH; }
 	void setHeight(float h) { m_fH = h; }
 
-	float getGlobalX() const;
-	float getGlobalY() const;
-	float getGlobalRotation() const;
+	Mat3f getGlobalTransform() const;
+	Vec2f getGlobalPosition() const;
+	Vec2f getPosition() const;
 
 	float getZOrder() const { return m_fZOrder; };
 	void setZOrder(float z);
 
-	float getRotation() const { return m_fRotation; };
-	void setRotation(float rot) { m_fRotation = rot; };
+	float getRotation() const { return m_transform.getRotation(); };
+	float getAngle() const { return m_transform.getAngle(); };
+	void setRotation(float rot) { m_transform = Mat3f::translation(getPosition()) * Mat3f::rotation(rot); };
+	void rotate(float radians) { m_transform *= Mat3f::rotation(radians); };
 
 	bool isVisible() const { return m_bIsVisible; };
 	void setVisible(bool visible) { m_bIsVisible = visible; };
@@ -84,7 +81,7 @@ public:
 	inline const std::vector<UIElement*>& getChildren() const { return m_children; }
 
 	virtual void update(float dt);
-	virtual void render(float parentX, float parentY, float parentRot);
+	virtual void render(const Mat3f& parentTransform);
 	virtual void onEvent(Event& event);
 
 	//Returns true if the element can be selected as a pointer target.
