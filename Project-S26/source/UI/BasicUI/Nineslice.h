@@ -27,8 +27,6 @@ private:
 	float m_fTopHeight;
 	//The height of the top and bottom edges of the nineslice
 	float m_fBottomHeight;
-	//The scale of the nineslice when rendered
-	float m_fScale;
 	//The color modulation of the nineslice when rendered
 	SDL_Color m_RGBAModulation;
 
@@ -46,7 +44,7 @@ public:
 	//		- topHeight: size of the top borders
 	//		- bottomHeight: size of the bottom border
 	//		- scale: scale of the nineslice (not the normal scale, i also don't understand this)
-	Nineslice(float x, float y, float w, float h, const std::string& id, float leftWidth, float rightWidth, float topHeight, float bottomHeight, float scale = 1);
+	Nineslice(float x, float y, float w, float h, const std::string& id, float leftWidth, float rightWidth, float topHeight, float bottomHeight);
 	~Nineslice();
 
 	//Setters and Getters for texture
@@ -56,8 +54,6 @@ public:
 	const std::string& getTexture() const;
 
 	//Getters
-	//It returns the scale of the nineslice when rendered
-	inline float getScale() const { return m_fScale; }
 	//It returns the width of the left edge of the nineslice when rendered
 	inline float getLeftWidth() const { return m_fLeftWidth; }
 	//It returns the width of the right edge of the nineslice when rendered
@@ -70,8 +66,6 @@ public:
 	inline const SDL_Color& getModulation() const { return m_RGBAModulation; }
 
 	//Setters
-	//It changes the scale of the nineslice when rendered
-	inline void setScale(float s) { m_fScale = s;}
 	//It changes the width of the left edge of the nineslice when rendered
 	inline void setLeftWidth(float lw) { m_fLeftWidth = lw; }
 	//It changes the width of the right edge of the nineslice when rendered

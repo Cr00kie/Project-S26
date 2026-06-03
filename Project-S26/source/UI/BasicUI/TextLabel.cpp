@@ -17,9 +17,7 @@ TextLabel::TextLabel(
 	float lineSpacing, float wordSpacing, float letterSpacing,
 	int visibleGlyphCount
 )
-	: UIElement(x, y, boxW, boxH, rotation)
-	, m_fScaleX(scale)
-	, m_fScaleY(scale)
+	: UIElement(x, y, boxW, boxH, rotation, scale, scale)
 	, m_TextAlignment(alignment)
 	, m_fLineSpacing(lineSpacing), m_fWordSpacing(wordSpacing), m_fLetterSpacing(letterSpacing)
 	, m_visibleGlyphCount(visibleGlyphCount)
@@ -195,8 +193,8 @@ float
 TextLabel::getLineStartX(const TextLine& line) const {
 	switch (m_TextAlignment) {
 	case TextAlign::Left:   return 0;
-	case TextAlign::Center: return (m_fW - line.width * m_fScaleX) * 0.5f;
-	case TextAlign::Right:  return  (m_fW - line.width * m_fScaleX);
+	case TextAlign::Center: return (m_fW - line.width * m_scale.getX()) * 0.5f;
+	case TextAlign::Right:  return  (m_fW - line.width * m_scale.getX());
 	}
 	return 0;
 }
@@ -216,7 +214,7 @@ TextLabel::getLineStartY(const size_t lineIndex) const {
 			if (token.type == TokenType::Glyph) {
 				float glyphHeight =
 					m_font->getGlyph(token.glyph)->h *
-					m_fScaleY *
+					m_scale.getY() *
 					token.style.scale;
 
 				lineHeight = std::max(lineHeight, glyphHeight);
@@ -224,7 +222,7 @@ TextLabel::getLineStartY(const size_t lineIndex) const {
 		}
 
 		if (lineHeight == 0.f) {
-			lineHeight = m_font->getGlyph(' ')->h * m_fScaleY;
+			lineHeight = m_font->getGlyph(' ')->h * m_scale.getY();
 		}
 
 		startY += lineHeight * m_fLineSpacing;
@@ -288,8 +286,8 @@ TextLabel::render(const Mat3f& parentTransform) {
 	float rotSin = std::sin(angleRad);
 
 	SDL_FRect caret = { 0, 0,
-		m_font->getGlyph(m_text[0])->w * m_fScaleX,
-		m_font->getGlyph(m_text[0])->h * m_fScaleY };
+		m_font->getGlyph(m_text[0])->w * m_scale.getX(),
+		m_font->getGlyph(m_text[0])->h * m_scale.getY() };
 
 	const int visibleGlyphLimit = getClampedVisibleGlyphCount();
 	bool stopRendering = false;
@@ -302,8 +300,8 @@ TextLabel::render(const Mat3f& parentTransform) {
 		caret.y = getLineStartY(lineIdx);
 
 		for (TextToken& token : line.tokens) {
-			caret.w = m_font->getGlyph(token.glyph)->w * m_fScaleX;
-			caret.h = m_font->getGlyph(token.glyph)->h * m_fScaleY;
+			caret.w = m_font->getGlyph(token.glyph)->w * m_scale.getX();
+			caret.h = m_font->getGlyph(token.glyph)->h * m_scale.getY();
 			if (token.type == TokenType::Space) {
 				caret.x += caret.w * m_fWordSpacing;
 				continue;
@@ -352,14 +350,14 @@ void TextLabel::RecalculateHeight()
 
 		for (const TextToken& token : line.tokens) {
 			if (token.type == TokenType::Glyph) {
-				float glyphHeight = m_font->getGlyph(token.glyph)->h * m_fScaleY * token.style.scale;
+				float glyphHeight = m_font->getGlyph(token.glyph)->h * m_scale.getY() * token.style.scale;
 				maxLineHeight = std::max(maxLineHeight, glyphHeight);
 			}
 		}
 
 		// If line has no glyphs, use height of space character
 		if (maxLineHeight == 0.f) {
-			maxLineHeight = m_font->getGlyph(' ')->h * m_fScaleY;
+			maxLineHeight = m_font->getGlyph(' ')->h * m_scale.getY();
 		}
 
 		totalHeight += maxLineHeight;
@@ -371,13 +369,13 @@ void TextLabel::RecalculateHeight()
 		for (const TextLine& line : m_tokenizedText) {
 			for (const TextToken& token : line.tokens) {
 				if (token.type == TokenType::Glyph) {
-					float glyphHeight = m_font->getGlyph(token.glyph)->h * m_fScaleY * token.style.scale;
+					float glyphHeight = m_font->getGlyph(token.glyph)->h * m_scale.getY() * token.style.scale;
 					maxLineHeight = std::max(maxLineHeight, glyphHeight);
 				}
 			}
 		}
 		if (maxLineHeight == 0.f) {
-			maxLineHeight = m_font->getGlyph(' ')->h * m_fScaleY;
+			maxLineHeight = m_font->getGlyph(' ')->h * m_scale.getY();
 		}
 		totalHeight += maxLineHeight * (m_fLineSpacing - 1.f) * (m_tokenizedText.size() - 1);
 	}

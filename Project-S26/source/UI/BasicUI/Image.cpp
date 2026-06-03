@@ -7,7 +7,7 @@
 #include <iostream>
 
 Image::Image(float x, float y, const std::string& id, float scale, bool isFlipped, float rotation)
-	: UIElement(x, y, 0, 0, rotation), m_bIsFlipped(isFlipped), m_fScale(scale), m_RGBAModulation({ 255,255,255,255 })
+	: UIElement(x, y, 0, 0, rotation, scale, scale), m_bIsFlipped(isFlipped), m_RGBAModulation({ 255,255,255,255 })
 {
 	setTexture(id);
 }
@@ -93,7 +93,7 @@ Image::render(const Mat3f& parentTransform) {
 	if (!m_Animation.has_value())
 	{
 		m_pTexture->render(
-			{ position.getX() - (m_fW * m_fScale) / 2, position.getY() - (m_fH * m_fScale) / 2 ,(m_fW * m_fScale), (m_fH * m_fScale)},
+			{ position.getX() - (m_fW * m_scale.getX()) / 2, position.getY() - (m_fH * m_scale.getY()) / 2 ,(m_fW * m_scale.getX()), (m_fH * m_scale.getY())},
 			(m_bIsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE),
 			rotation
 		);
@@ -115,7 +115,7 @@ Image::render(const Mat3f& parentTransform) {
 
 		m_pTexture->render(
 			sourceRect,
-			{ position.getX() - (frameWidth * m_fScale) / 2, position.getY() - (frameHeight * m_fScale) / 2 ,(frameWidth * m_fScale), (frameHeight * m_fScale)},
+			{ position.getX() - (frameWidth * m_scale.getX()) / 2, position.getY() - (frameHeight * m_scale.getY()) / 2 ,(frameWidth * m_scale.getX()), (frameHeight * m_scale.getY())},
 			(m_bIsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE),
 			rotation
 		);

@@ -51,12 +51,6 @@ protected:
 	std::string m_sTextureID;
 	//If the image is flipped horizontally when rendered
 	bool m_bIsFlipped;
-	//The scale of the image when rendered
-	float m_fScale;
-	//The width and height of the image when rendered
-	float m_fW;
-	//The width and height of the image when rendered
-	float m_fH;
 	//The color modulation of the image when rendered
 	SDL_Color m_RGBAModulation;
 	//Frame and animation data
@@ -78,8 +72,6 @@ public:
 	//Getters
 	//It returns the ID of the texture used to render the image
 	const std::string& getTexture() const;
-	//It returns the scale of the image when rendered
-	inline float getScale() const { return m_fScale; }
 	//It returns the color modulation of the image when rendered
 	inline const SDL_Color& getModulation() const { return m_RGBAModulation; }
 	//Get animation data
@@ -90,8 +82,6 @@ public:
 	//Setters
 	//It changes the texture of the image to the texture with the given ID
 	void setTexture(const std::string& id);
-	//It changes the scale of the image when rendered
-	inline void setScale(float s) { m_fScale = s; }
 	//It changes the color modulation of the image when rendered
 	inline void setModulation(SDL_Color rgba) { m_RGBAModulation = rgba; }
 	//Sets animation data

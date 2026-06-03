@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <numbers>
 #include <cmath>
+#include <iostream>
+
+#include "../Events/Event.h"
 
 // Helper function used to order visual elements inside a container. Determines the order VE will follow inside it.
 bool UIElementsZOrdering(UIElement* lhs, UIElement* rhs)
@@ -38,12 +41,16 @@ void UIElement::cleanUpDeadElements()
 	m_children.erase(result, m_children.end());
 }
 
-UIElement::UIElement(float x, float y, float width, float height, float rotation, float zOrder)
+UIElement::UIElement(float x, float y, float width, float height, float rotation, float scaleX, float scaleY, float zOrder)
 	:	m_bIsVisible(true),
 		m_bDead(false), 
 		m_fW(width), m_fH(height),
+		m_scale(scaleX, scaleY),
 		m_fZOrder(zOrder),
-		m_parent(nullptr)
+		m_parent(nullptr),
+		m_bInteractive(true),
+		m_bIsHovered(false),
+		m_bWasPressedInside(false)
 {
 	float rot = (rotation * std::numbers::pi_v<float>) / 180.f;
 	m_transform = Mat3f::translation({ x, y }) * Mat3f::rotation(rot);
@@ -127,8 +134,81 @@ void UIElement::render(const Mat3f& parentTransform)
 	}
 }
 
-void UIElement::onEvent(Event& event)
+void UIElement::onEvent(Event& ev)
 {
+	for (auto it = m_children.rbegin(); it != m_children.rend(); ++it)
+	{
+		(*it)->onEvent(ev);
+	}
+
+	switch (ev.getType())
+	{
+	case Event::Type::MOUSE: {
+		HandleMouseEvent(ev);
+	}break;
+	}
+}
+
+void UIElement::HandleMouseEvent(Event& ev)
+{
+	// If event has already been handled we don't care
+	bool alreadyHandled = ev.handled();
+	if (alreadyHandled)
+	{
+		m_bWasPressedInside = false;
+		return;
+	}
+
+	MouseEvent* mev = ev.getMouse();
+	MouseEvent::State mouseState = mev->getState();
+
+	bool inside = isMouseInside(mev->getX(), mev->getY());
+
+	UIElement* eventTarget = ev.getEventTarget();
+	bool isTarget = (eventTarget == this);
+
+	// Is mouse inside and we are the target?
+	if (inside && isTarget)
+	// Yes ...
+	{
+
+		if (!m_bIsHovered)
+		{
+			m_userEvents.onHoverEnter.invoke(*mev);
+			m_bIsHovered = true;
+		}
+
+		// If left click is pressed
+		if (mouseState == MouseEvent::State::LEFT_PRESSED)
+		{
+			// Set event as handled and save pressed state
+			m_bWasPressedInside = true;
+		}
+		else if (mouseState == MouseEvent::State::LEFT_PRESSING)
+		{
+			m_userEvents.onHold.invoke(*mev);
+		}
+		// If we were pressed and click is released
+		else if (m_bWasPressedInside && mouseState == MouseEvent::State::LEFT_RELEASED)
+		{
+			// If we are still hovered notify all click callbacks
+			m_userEvents.onClick.invoke(*mev);
+			m_bWasPressedInside = false;
+		}
+
+		ev.handle();
+	}
+	else
+	// No ...
+	{
+		// If we were hovered call hover exit callbacks
+		if (m_bIsHovered)
+		{
+			m_userEvents.onHoverExit.invoke(*mev);
+			m_bIsHovered = false;
+		}
+		m_bWasPressedInside = false;
+	}
 }
 
 UIElement* UIElement::findEventTarget(float x, float y)
@@ -157,6 +237,10 @@ bool UIElement::isMouseInside(float x, float y)
 {
 	// Transform world point into local space using inverse
 	Vec2f local = m_transform.inversed() * Vec2f(x, y);
-	return local.getX() >= 0 && local.getX() <= m_fW
-		&& local.getY() >= 0 && local.getY() <= m_fH;
+
+	float totalWidth = m_fW * m_scale.getX() / 2;
+	float totalHeight = m_fH * m_scale.getY() / 2;
+
+	return local.getX() >= -totalWidth && local.getX() <= totalWidth
+		&& local.getY() >= -totalHeight && local.getY() <= totalHeight;
 }

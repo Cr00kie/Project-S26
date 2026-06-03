@@ -20,12 +20,6 @@ private:
 	Texture* m_pTexture;
 	//If the rectangle is flipped horizontally when rendered
 	bool m_bIsFlipped;
-	//The rotation angle of the rectangle in degrees
-	float m_fRotation;
-	//The scale of the rectangle in the x and y direction
-	float m_fScaleX;
-	//The scale of the rectangle in the x and y direction
-	float m_fScaleY;
 
 	//It loads the texture of the rectangle with the given color
 	void loadColor(const SDL_Color& color);
@@ -48,18 +42,10 @@ public:
 	//It changes the color of the rectangle by loading a new texture with the given color
 	void setColor(const SDL_Color& color);
 
-	//It changes the ScaleX of the rectangle when rendered
-	inline void setScaleX(float s) { m_fScaleX = s; }
-	//It changes the ScaleY of the rectangle when rendered
-	inline void setScaleY(float s) { m_fScaleY = s; }
 	//It changes whether the rectangle is flipped horizontally when rendered
 	inline void setFlipped(bool flipped) { m_bIsFlipped = flipped; }
 
 	//Getters
-	//It returns the ScaleX of the rectangle when rendered
-	inline float getScaleX() const { return m_fScaleX; }
-	//It returns the ScaleY of the rectangle when rendered
-	inline float getScaleY() const { return m_fScaleY; }
 	//It returns whether the rectangle is flipped horizontally when rendered
 	inline bool isFlipped() const { return m_bIsFlipped; }
 

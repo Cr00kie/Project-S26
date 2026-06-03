@@ -21,7 +21,7 @@ void Rect::loadColor(const SDL_Color& color) {
 }
 
 Rect::Rect(float x, float y, const SDL_Color& color, float w, float h, bool isFlipped, float rotation, float scale)
-	: UIElement(x, y, w, h, rotation), m_bIsFlipped(isFlipped), m_fScaleX(scale), m_fScaleY(scale), m_pTexture(nullptr)
+	: UIElement(x, y, w, h, rotation, scale, scale), m_bIsFlipped(isFlipped), m_pTexture(nullptr)
 {
 	// Get renderer
 	auto app = ServiceLocator::tryGet<AppFacadeService>();
@@ -53,7 +53,7 @@ Rect::render(const Mat3f& parentTransform) {
 	Vec2f position = globalTransform.getTranslation();
 
 	// Render element
-	m_pTexture->render({ position.getX() - (m_fW * m_fScaleX) / 2, position.getY() - (m_fH * m_fScaleY) / 2 ,(m_fW * m_fScaleX), (m_fH * m_fScaleY)}, (m_bIsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE), rotation);
+	m_pTexture->render({ position.getX() - (m_fW * m_scale.getX()) / 2, position.getY() - (m_fH * m_scale.getY()) / 2 ,(m_fW * m_scale.getX()), (m_fH * m_scale.getY())}, (m_bIsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE), rotation);
 
 	UIElement::render(parentTransform);
 }

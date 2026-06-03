@@ -183,10 +183,10 @@
     <ClCompile Include="source\UI\BasicUI\Nineslice.cpp" />
     <ClCompile Include="source\UI\BasicUI\Rect.cpp" />
     <ClCompile Include="source\UI\BasicUI\TextLabel.cpp" />
-    <ClCompile Include="source\UI\Buttons\Button.cpp" />
     <ClCompile Include="source\UI\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Events\ElementEventSystem.h" />
     <ClInclude Include="source\Math\Mat3.h" />
     <ClInclude Include="source\AppFacadeService.h" />
     <ClInclude Include="source\Audio\AudioManager.h" />
@@ -213,7 +213,6 @@
     <ClInclude Include="source\UI\BasicUI\Nineslice.h" />
     <ClInclude Include="source\UI\BasicUI\Rect.h" />
     <ClInclude Include="source\UI\BasicUI\TextLabel.h" />
-    <ClInclude Include="source\UI\Buttons\Button.h" />
     <ClInclude Include="source\UI\UIElement.h" />
     <ClInclude Include="source\Math\Vec2.h" />
     <ClInclude Include="source\Math\Vec3.h" />

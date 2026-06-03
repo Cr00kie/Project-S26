@@ -1,10 +1,12 @@
 #pragma once
 
 #include <vector>
-#include "../Events/Event.h"
+#include <unordered_map>
+#include <functional>
+
+#include "../Events/ElementEventSystem.h"
 #include "../Math/Mat3.h"
 
-// TODO: CHANGE TO USE MATRIXES
 class UIElement
 {
 private:
@@ -21,6 +23,10 @@ private:
 	std::vector<UIElement*> m_children;
 	void setParent(UIElement* parent) { m_parent = parent; }
 
+	bool m_bWasPressedInside;
+	bool m_bIsHovered;
+	bool m_bInteractive; // TODO: Make possible to set to not interactive
+
 protected:
 	//If the element is visible,
 	//it will be rendered, otherwise it won't be rendered but it will still be able to interact with mouse events
@@ -29,7 +35,7 @@ protected:
 	bool m_bDead;
 
 	Mat3f m_transform;
-	// Vec2f m_scale; USE THIS IF WE EVER WANT TO SCALE SHIT
+	Vec2f m_scale;
 	float m_fW, m_fH;
 	float m_fZOrder;
 
@@ -42,8 +48,10 @@ protected:
 
 	void markForZSort() { m_bNeedsZSort = true; }
 	void markForCleanup() { m_bNeedsCleanup = true; }
+
 public:
-	UIElement(float x, float y, float width = 0, float height = 0, float rotation = 0, float zOrder = 0);
+	ElementEventSystem m_userEvents;
+	UIElement(float x, float y, float width = 0, float height = 0, float rotation = 0, float scaleX = 1, float scaleY = 1, float zOrder = 0);
 	virtual ~UIElement();
 
 	float getX() const { return m_transform[2]; };
@@ -58,9 +66,19 @@ public:
 	float getHeight() const { return m_fH; }
 	void setHeight(float h) { m_fH = h; }
 
+	Vec2f getScale() const { return m_scale; }
+	float getScaleX() const { return m_scale.getX(); }
+	float getScaleY() const { return m_scale.getY(); }
+	void setScale(Vec2f scale) { m_scale = scale; }
+	void setScale(float scale) { m_scale.set(scale, scale); }
+	void setScale(float scaleX, float scaleY) { m_scale.set(scaleX, scaleY); }
+	void setScaleX(float scaleX) { m_scale.setX(scaleX); }
+	void setScaleY(float scaleY) { m_scale.setY(scaleY); }
+
 	Mat3f getGlobalTransform() const;
 	Vec2f getGlobalPosition() const;
 	Vec2f getPosition() const;
+	void setPosition(float x, float y) { m_transform[2] = x; m_transform[5] = y; }
 
 	float getZOrder() const { return m_fZOrder; };
 	void setZOrder(float z);
@@ -83,6 +101,8 @@ public:
 	virtual void update(float dt);
 	virtual void render(const Mat3f& parentTransform);
 	virtual void onEvent(Event& event);
+
+	void HandleMouseEvent(Event& ev);
 
 	//Returns true if the element can be selected as a pointer target.
 	virtual bool isPointerTarget() const { return false; }

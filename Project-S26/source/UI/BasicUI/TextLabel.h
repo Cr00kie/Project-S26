@@ -97,31 +97,17 @@ public:
   void showAllGlyphs();
   // Get total number of glyph tokens in current text
   int getGlyphCount() const { return m_glyphCount; }
-	// Set the text of the text label
-    void setFont(const std::string& fontId);
-	// Get the text of the text label
-    const std::string& getFont() const;
+  // Set the text of the text label
+  void setFont(const std::string& fontId);
+  // Get the text of the text label
+  const std::string& getFont() const;
 
-	// Set the scale of the text label by (uniformScale, uniformScale) values
-    inline void setScale(float uniformScale)      { m_fScaleX = m_fScaleY = uniformScale; }
-	// Set the scale of the text label by (sx, sy) values
-    inline void setScale(float sx, float sy)      { m_fScaleX = sx; m_fScaleY = sy; }
-
-	// Get the scale of the text label in x direction
-    inline float getScaleX() const                { return m_fScaleX; }
-	// Get the scale of the text label in y direction
-    inline float getScaleY() const                { return m_fScaleY; }
-	// Set the scale of the text label in x direction
-    inline void setScaleX(float x)                { m_fScaleX = x; }
-	// Set the scale of the text label in y direction
-    inline void setScaleY(float y)                { m_fScaleY = y; }
-
-    // Get the Height after wrapping. It can be more or less than default height, depending on glyph size
-    float getTotalHeight() const          { return m_fTotalHeight; }
-    void setColor(int r, int g, int b, int a);
+  // Get the Height after wrapping. It can be more or less than default height, depending on glyph size
+  float getTotalHeight() const { return m_fTotalHeight; }
+  void setColor(int r, int g, int b, int a);
 
 private:
-	int m_glyphCount = 0;
+  int m_glyphCount = 0;
   int m_visibleGlyphCount = -1;
   int getClampedVisibleGlyphCount() const;
 
@@ -148,9 +134,6 @@ private:
 	// The text alignment of the text label,
     // it will be used to align the text when rendering
     TextAlign               m_TextAlignment;
-	// The scale of the text label in x and y direction
-    float                   m_fScaleX   = 1.0f;
-    float                   m_fScaleY   = 1.0f;
 	// The spacing between letters, lines and words
     float                   m_fLetterSpacing;
     float                   m_fLineSpacing;

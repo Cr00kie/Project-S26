@@ -4,12 +4,11 @@
 #include "../../Tools/ServiceLocator.h"
 #include "../../Resources/Texture.h"
 
-Nineslice::Nineslice(float x, float y, float w, float h, const std::string& id, float leftWidth, float rightWidth, float topHeight, float bottomHeight, float scale)
+Nineslice::Nineslice(float x, float y, float w, float h, const std::string& id, float leftWidth, float rightWidth, float topHeight, float bottomHeight)
 	:
-	UIElement(x, y, w, h),
+	UIElement(x, y, w, h, 0),
 	m_fLeftWidth(leftWidth), m_fRightWidth(rightWidth),
 	m_fTopHeight(topHeight), m_fBottomHeight(bottomHeight),
-	m_fScale(scale),
 	m_RGBAModulation({ 255,255,255,255 })
 {
 	setTexture(id);
@@ -46,7 +45,7 @@ Nineslice::render(const Mat3f& parentTransform) {
 
 	// Render element as nineslice
 	m_pTexture->render9Grid({ position.getX() - m_fW / 2, position.getY() - m_fH / 2, m_fW, m_fH},
-		m_fLeftWidth, m_fRightWidth, m_fTopHeight, m_fBottomHeight, m_fScale);
+		m_fLeftWidth, m_fRightWidth, m_fTopHeight, m_fBottomHeight, 1);
 
 	UIElement::render(parentTransform);
 }
