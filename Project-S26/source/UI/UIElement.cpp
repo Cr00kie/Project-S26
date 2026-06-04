@@ -152,21 +152,23 @@ void UIElement::onEvent(Event& ev)
 
 void UIElement::HandleMouseEvent(Event& ev)
 {
+	MouseEvent* mev = ev.getMouse();
+	
 	// If event has already been handled we don't care
 	bool alreadyHandled = ev.handled();
 	if (alreadyHandled)
 	{
+		if (m_bIsHovered)
+		{
+			m_userEvents.onHoverExit.invoke(*mev);
+			m_bIsHovered = false;
+		}
 		m_bWasPressedInside = false;
 		return;
 	}
 
-	MouseEvent* mev = ev.getMouse();
-	MouseEvent::State mouseState = mev->getState();
-
 	bool inside = isMouseInside(mev->getX(), mev->getY());
-
-	UIElement* eventTarget = ev.getEventTarget();
-	bool isTarget = (eventTarget == this);
+	bool isTarget = (ev.getEventTarget() == this);
 
 	// Is mouse inside and we are the target?
 	if (inside && isTarget)
@@ -179,6 +181,7 @@ void UIElement::HandleMouseEvent(Event& ev)
 			m_bIsHovered = true;
 		}
 
+		MouseEvent::State mouseState = mev->getState();
 		// If left click is pressed
 		if (mouseState == MouseEvent::State::LEFT_PRESSED)
 		{
@@ -237,7 +240,7 @@ UIElement* UIElement::findEventTarget(float x, float y)
 bool UIElement::isMouseInside(float x, float y)
 {
 	// Transform world point into local space using inverse
-	Vec2f local = m_transform.inversed() * Vec2f(x, y);
+	Vec2f local = getGlobalTransform().inversed() * Vec2f(x, y);
 
 	float totalWidth = m_fW * m_scale.getX() / 2;
 	float totalHeight = m_fH * m_scale.getY() / 2;

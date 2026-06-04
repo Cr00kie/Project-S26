@@ -28,8 +28,8 @@ public:
 	// Get the height of the texture
     inline unsigned int getHeight() const { return m_iHeight; }
 	// Render the texture to the target rectangle with the given flip mode and rotation angle
-    void render(const SDL_FRect& targetRect, SDL_FlipMode flipMode = SDL_FLIP_NONE, double angle = 0);
-    void render(const SDL_FRect& sourceRect, const SDL_FRect& targetRect, SDL_FlipMode flipMode = SDL_FLIP_NONE, double angle = 0);
+    void render(const SDL_FRect& targetRect, SDL_FlipMode flipMode = SDL_FLIP_NONE, float rotation = 0);
+    void render(const SDL_FRect& sourceRect, const SDL_FRect& targetRect, SDL_FlipMode flipMode = SDL_FLIP_NONE, float rotation = 0);
 	// Render the texture to the target rectangle with 9-grid scaling,
     void render9Grid(const SDL_FRect& targetRect, float left_width, float right_width, float top_height, float bottom_height, float scale = 1);
     void render9Grid(const SDL_FRect& sourceRect, const SDL_FRect& targetRect, float left_width, float right_width, float top_height, float bottom_height, float scale = 1);

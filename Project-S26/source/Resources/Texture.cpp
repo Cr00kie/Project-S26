@@ -12,7 +12,7 @@ Texture::~Texture()
 	SDL_DestroyTexture(m_pTexture);
 }
 
-void Texture::render(const SDL_FRect& targetRect, SDL_FlipMode flipMode, double rotation)
+void Texture::render(const SDL_FRect& targetRect, SDL_FlipMode flipMode, float rotation)
 {
 	float angle = rotation * 180.f / std::numbers::pi_v<float>;
 	SDL_FRect sourceRect (0, 0, (float)m_iWidth, (float)m_iHeight);
@@ -25,7 +25,7 @@ void Texture::render9Grid(const SDL_FRect& targetRect, float left_width, float r
 	SDL_RenderTexture9Grid(m_pRenderer, m_pTexture, &sourceRect, left_width, right_width, top_height, bottom_height, scale, &targetRect);
 }
 
-void Texture::render(const SDL_FRect& sourceRect, const SDL_FRect& targetRect, SDL_FlipMode flipMode, double rotation)
+void Texture::render(const SDL_FRect& sourceRect, const SDL_FRect& targetRect, SDL_FlipMode flipMode, float rotation)
 {
 	float angle = rotation * 180.f / std::numbers::pi_v<float>;
 	SDL_RenderTextureRotated(m_pRenderer, m_pTexture, &sourceRect, &targetRect, angle, nullptr, flipMode);
