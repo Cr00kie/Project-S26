@@ -138,7 +138,8 @@ void UIElement::onEvent(Event& ev)
 {
 	for (auto it = m_children.rbegin(); it != m_children.rend(); ++it)
 	{
-		(*it)->onEvent(ev);
+		if((*it)->isInteractive())
+			(*it)->onEvent(ev);
 	}
 
 	switch (ev.getType())

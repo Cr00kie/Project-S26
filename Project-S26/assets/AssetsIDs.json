@@ -4,6 +4,10 @@
       "id": "test",
       "path" : "assets/Images/test.png"
     }
+    {
+      "id": "square",
+      "path" : "assets/Images/square.png"
+    }
   ],
   "Sounds": [],
   "Fonts": [

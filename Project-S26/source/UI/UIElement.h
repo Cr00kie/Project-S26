@@ -91,6 +91,9 @@ public:
 	bool isVisible() const { return m_bIsVisible; };
 	void setVisible(bool visible) { m_bIsVisible = visible; };
 
+	bool isInteractive() const { return m_bInteractive; }
+	void setInteractive(bool interactive) { m_bInteractive = interactive; }
+
 	void remove();
 	bool isMarkedToRemove() const { return m_bDead; }
 	
@@ -104,10 +107,6 @@ public:
 
 	void HandleMouseEvent(Event& ev);
 
-	//Returns true if the element can be selected as a pointer target.
-	virtual bool isPointerTarget() const { return false; }
-	//Returns true if the point is inside this element hit area.
-	virtual bool hitTest(float x, float y) const { return false; }
 	//Finds the event target inside this element subtree (default: self only).
 	virtual UIElement* findEventTarget(float x, float y);
 	bool isMouseInside(float x, float y);
