@@ -5,6 +5,8 @@
 #include "Audio/AudioManager.h"
 #include "Scenes/SceneManager.h"
 
+#include "Scenes/TestScene.h"
+
 #include <SDL3/SDL.h>
 #include <memory>
 #include <tuple>
@@ -137,6 +139,8 @@ void SDLApplication::initGlobalServices()
 	// Register SceneManager as global service
 	m_sceneManager = new SceneManager();
 	ServiceLocator::registerService(m_sceneManager);
+
+	m_sceneManager->addScene("test", new TestScene());
 
 }
 
