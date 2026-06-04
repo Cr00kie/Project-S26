@@ -1,0 +1,52 @@
+{
+    "activeFile": "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json": {
+            "expandedGroupLayers": [
+                5
+            ],
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1292.6666666666665,
+                "y": 632
+            }
+        },
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.json": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.tsx": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/SceneElements.json": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes",
+    "last.imagePath": "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Images",
+    "map.height": 1080,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 1,
+    "map.tileWidth": 1,
+    "map.width": 1920,
+    "openFiles": [
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json",
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/SceneElements.json"
+    ],
+    "project": "scene-builder.tiled-project",
+    "property.type": "color",
+    "recentFiles": [
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/SceneElements.json",
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json",
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.json",
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.tsx"
+    ],
+    "textEdit.monospace": true,
+    "tileset.lastUsedFormat": "json",
+    "tileset.type": 1
+}

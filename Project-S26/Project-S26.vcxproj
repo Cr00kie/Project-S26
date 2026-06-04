@@ -172,6 +172,7 @@
     <ClCompile Include="source\Resources\ResourceLoaders\SoundLoader.cpp" />
     <ClCompile Include="source\Resources\ResourceLoaders\TextureLoader.cpp" />
     <ClCompile Include="source\Resources\ResourceManager.cpp" />
+    <ClCompile Include="source\Scenes\SceneBuilder.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Resources\Font.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="source\Resources\ResourceLoaders\SoundLoader.h" />
     <ClInclude Include="source\Resources\ResourceLoaders\TextureLoader.h" />
     <ClInclude Include="source\Resources\ResourceManager.h" />
+    <ClInclude Include="source\Scenes\SceneBuilder.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Resources\BasicResource.h" />
     <ClInclude Include="source\Resources\Font.h" />

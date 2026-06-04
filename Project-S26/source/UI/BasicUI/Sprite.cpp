@@ -69,7 +69,7 @@ void Sprite::render(const Mat3f& parentTransform)
 	}
 	else if (m_properties.type == NINESLICE)
 	{
-		m_properties.texture->render9Grid({ finalX, finalY, totalWidth, totalHeight },
+ 		m_properties.texture->render9Grid({ finalX, finalY, totalWidth, totalHeight },
 			m_properties.nslProp.leftW, m_properties.nslProp.rightW, m_properties.nslProp.topH, m_properties.nslProp.botH, 1);
 	}
 

@@ -27,8 +27,7 @@ public:
     // rotation angle and color modulation
     void renderCharacter(unsigned char c,
                         const SDL_FRect& targetRect,
-                        SDL_FlipMode flipMode = SDL_FLIP_NONE,
-                        double angle = 0, SDL_Color color = {255, 255, 255, 255});
+                        SDL_FlipMode flipMode = SDL_FLIP_NONE, float rotation = 0, SDL_Color color = {255, 255, 255, 255});
 
 	// Get the width and height of the given text string using the font,
 	// it will return true if the text size was successfully obtained, false otherwise

@@ -266,8 +266,7 @@ void TextLabel::renderGlyph(float x, float y, const TextToken& token, const SDL_
 		},
 		flip,
 		token.style.rotation + rotation,
-		token.style.color
-	);
+		token.style.color);
 }
 
 void
@@ -280,10 +279,9 @@ TextLabel::render(const Mat3f& parentTransform) {
 	float globX = position.getX();
 	float globY = position.getY();
 	float rotation = globalTransform.getRotation();
-	float angleRad = globalTransform.getAngle();
 
-	float rotCos = std::cos(angleRad);
-	float rotSin = std::sin(angleRad);
+	float rotCos = std::cos(rotation);
+	float rotSin = std::sin(rotation);
 
 	SDL_FRect caret = { 0, 0,
 		m_font->getGlyph(m_text[0])->w * m_scale.getX(),
@@ -398,5 +396,10 @@ void TextLabel::setColor(int r, int g, int b, int a)
 	oss << m_text;
 
 	setText(oss.str());
+}
+
+void TextLabel::setColor(SDL_Color color)
+{
+	setColor(color.r, color.g, color.b, color.a);
 }
 

@@ -1,0 +1,149 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "compatibilityVersion": 1100,
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "properties": [
+    ],
+    "propertyTypes": [
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 5,
+            "members": [
+                {
+                    "name": "Modulation",
+                    "type": "color",
+                    "value": ""
+                },
+                {
+                    "name": "Sprite",
+                    "type": "class",
+                    "value": {
+                    }
+                }
+            ],
+            "name": "Image",
+            "type": "class",
+            "useAs": [
+                "property",
+                "object"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 4,
+            "members": [
+                {
+                    "name": "Bottom Border",
+                    "type": "float",
+                    "value": 0
+                },
+                {
+                    "name": "Left Border",
+                    "type": "float",
+                    "value": 0
+                },
+                {
+                    "name": "Modulation",
+                    "type": "color",
+                    "value": ""
+                },
+                {
+                    "name": "Right Border",
+                    "type": "float",
+                    "value": 0
+                },
+                {
+                    "name": "Sprite",
+                    "type": "class",
+                    "value": {
+                    }
+                },
+                {
+                    "name": "Top Border",
+                    "type": "float",
+                    "value": 0
+                }
+            ],
+            "name": "Nineslice",
+            "type": "class",
+            "useAs": [
+                "property",
+                "object"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Render Type",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "Image",
+                "Nineslice"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 6,
+            "members": [
+                {
+                    "name": "Click Color",
+                    "type": "color",
+                    "value": "#ff8f8f8f"
+                },
+                {
+                    "name": "Click Scale",
+                    "type": "float",
+                    "value": 0.8
+                },
+                {
+                    "name": "Hover Color",
+                    "type": "color",
+                    "value": "#ffcacaca"
+                },
+                {
+                    "name": "Hover Scale",
+                    "type": "float",
+                    "value": 1.1
+                },
+                {
+                    "name": "Text",
+                    "type": "string",
+                    "value": "Button"
+                },
+                {
+                    "name": "Text Color",
+                    "type": "color",
+                    "value": "#ff000000"
+                }
+            ],
+            "name": "SimpleButton",
+            "type": "class",
+            "useAs": [
+                "property",
+                "object"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 2,
+            "members": [
+            ],
+            "name": "TextLabel",
+            "type": "class",
+            "useAs": [
+                "property",
+                "object"
+            ]
+        }
+    ]
+}

@@ -105,6 +105,7 @@ public:
   // Get the Height after wrapping. It can be more or less than default height, depending on glyph size
   float getTotalHeight() const { return m_fTotalHeight; }
   void setColor(int r, int g, int b, int a);
+  void setColor(SDL_Color color);
 
 private:
   int m_glyphCount = 0;

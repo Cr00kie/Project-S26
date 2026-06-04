@@ -2,8 +2,8 @@
 #include <SDL3/SDL_main.h>
 
 // TODO:
-// - Add Trickle down and bubble up logic to UIElement EventHandling
-// - Implement Scene builder to create scenes from Tiled (Take and adapt previous implementation)
+// - Add Trickle down and bubble up logic to UIElement EventHandling?
+// - Add more element factories to editor
 
 int main(int argc, char* argv[])
 {

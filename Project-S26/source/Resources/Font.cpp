@@ -1,6 +1,7 @@
 #include "Font.h"
 
 #include <cassert>
+#include <numbers>
 
 Font::Font(SDL_Renderer* renderer, TTF_Font* font) : m_pRenderer(renderer), m_pFont(font)
 {
@@ -26,8 +27,9 @@ Font::~Font()
 	TTF_CloseFont(m_pFont);
 }
 
-void Font::renderCharacter(unsigned char c, const SDL_FRect& targetRect, SDL_FlipMode flipMode, double angle, SDL_Color color)
+void Font::renderCharacter(unsigned char c, const SDL_FRect& targetRect, SDL_FlipMode flipMode, float rotation, SDL_Color color)
 {
+	float angle = rotation * 180.f / std::numbers::pi_v<float>;
 	// Get character texture
 	SDL_Texture* glyphTexture = m_GlyphAtlas[c];
 

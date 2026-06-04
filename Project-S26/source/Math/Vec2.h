@@ -91,6 +91,11 @@ public:
 				 std::clamp(v._y, lo._y, hi._y) };
 	}
 
+	void rotate(float rotation)
+	{
+		_x = _x * std::cos(rotation) - _y * std::sin(rotation);
+		_y = _y * std::sin(rotation) + _y * std::cos(rotation);
+	}
 
 private:
 	T _x;

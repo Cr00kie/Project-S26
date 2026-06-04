@@ -225,11 +225,11 @@ UIElement* UIElement::findEventTarget(float x, float y)
 	
 	for (auto element : m_children)
 	{
-		target = element->findEventTarget(x, y);
+		if(element->isInteractive()) target = element->findEventTarget(x, y);
 		if (target) break;
 	}
 
-	if (!target && isMouseInside(x, y))
+	if (!target && isMouseInside(x, y) && isInteractive())
 	{
 		target = this;
 	}

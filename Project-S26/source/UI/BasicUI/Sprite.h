@@ -52,6 +52,7 @@ public:
     inline const std::string& getTexture() const { return m_properties.textureID; }
 
     void setRGBAModulation(SDL_Color modulation) { m_properties.rgbaModulation = modulation; }
+    void setOpacity(Uint8 alpha) { m_properties.rgbaModulation.a = alpha; }
     SDL_Color getRGBAModulation() const { return m_properties.rgbaModulation; }
 
     void setType(RenderType type);
@@ -74,6 +75,14 @@ public:
 
     inline void setBorderSize(float size) { assert(m_properties.type == NINESLICE); 
                                         m_properties.nslProp.leftW = m_properties.nslProp.rightW = m_properties.nslProp.topH = m_properties.nslProp.botH = size; }
+    inline void setBorderSize(float lw, float rw, float th, float bh)
+    {
+        assert(m_properties.type == NINESLICE);
+        m_properties.nslProp.leftW = lw;
+        m_properties.nslProp.rightW = rw;
+        m_properties.nslProp.topH = th;
+        m_properties.nslProp.botH = bh;
+    }
 
     void render(const Mat3f& parentTransform) override;
 };
