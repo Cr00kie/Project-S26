@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\UI\ParticleEmitter.cpp" />
     <ClCompile Include="source\Resources\Animation.cpp" />
     <ClCompile Include="source\Resources\ResourceLoaders\AnimationLoader.cpp" />
     <ClCompile Include="source\Math\Mat3.cpp" />
@@ -188,6 +189,8 @@
     <ClCompile Include="source\Tweens\SpriteAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Tools\ObjectPool.h" />
+    <ClInclude Include="source\UI\ParticleEmitter.h" />
     <ClInclude Include="source\Resources\Animation.h" />
     <ClInclude Include="source\Resources\ResourceLoaders\AnimationLoader.h" />
     <ClInclude Include="source\Events\ElementEventSystem.h" />

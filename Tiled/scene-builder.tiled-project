@@ -97,7 +97,12 @@
                 {
                     "name": "Click Color",
                     "type": "color",
-                    "value": "#ff8f8f8f"
+                    "value": "#ffffffff"
+                },
+                {
+                    "name": "Click Image",
+                    "type": "string",
+                    "value": ""
                 },
                 {
                     "name": "Click Scale",
@@ -107,7 +112,12 @@
                 {
                     "name": "Hover Color",
                     "type": "color",
-                    "value": "#ffcacaca"
+                    "value": "#ffffffff"
+                },
+                {
+                    "name": "Hover Image",
+                    "type": "string",
+                    "value": ""
                 },
                 {
                     "name": "Hover Scale",
@@ -122,7 +132,7 @@
                 {
                     "name": "Text Color",
                     "type": "color",
-                    "value": "#ff000000"
+                    "value": "#ffffffff"
                 }
             ],
             "name": "SimpleButton",

@@ -5,6 +5,8 @@
 // - Add more element factories to editor
 // - Add scripting?
 // - Add Debug/Logging class
+// - Create a Slider
+// - Make scene manager support having more than one scene at the same time
 
 int main(int argc, char* argv[])
 {

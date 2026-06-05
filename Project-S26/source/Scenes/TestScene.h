@@ -3,6 +3,7 @@
 #include "../UI/BasicUI/Sprite.h"
 #include "SceneBuilder.h"
 #include "../Tweens/SpriteAnimator.h"
+#include "../UI/ParticleEmitter.h"
 #include <iostream>
 
 class TestScene :
@@ -18,9 +19,13 @@ public:
         m_button = sb.Q<Sprite>("Button");
         elapsed = 0;
 
-        SpriteAnimator& sa = m_button->getAnimator();
-        sa.setAnimation("buttonAnim");
-        sa.play();
+        m_emitter = new ParticleEmitter(800, 800, 100, 0.5, true, 25);
+        addChild(m_emitter);
+        m_emitter->setParticleVelocity(Vec2f(200,200), Vec2f(-200,-200));
+        m_emitter->setParticleAcceleration(Vec2f(0, 50));
+        m_emitter->setParticleLifetime(1, 1.9);
+        m_emitter->setParticleAngularVel(1.f);
+        emited = false;
     }
     void update(float dt) override
     {
@@ -28,13 +33,21 @@ public:
         elapsed += dt;
 
         m_button->rotate(dt * 0.2f);
-        m_cajita->setPosition(std::cos(elapsed) * 100.f, m_cajita->getY());
-        m_padre->rotate(dt * 0.2f);
+        //m_cajita->setPosition(std::cos(elapsed) * 100.f, m_cajita->getY());
+        m_padre->rotate(dt * 0.1f);
+
+        /*if (elapsed > 2)
+        {
+            m_emitter->emit(100);
+            elapsed = 0;
+        }*/
     }
 private:
     float elapsed;
     UIElement* m_cajita;
     Sprite* m_button;
     UIElement* m_padre;
+    ParticleEmitter* m_emitter;
+    bool emited;
 };
 

@@ -163,11 +163,17 @@ UIElement* SceneBuilder::createSimpleButton(nlohmann::json& object)
 	Sprite* button = createSprite(object);
 
 	SDL_Color defaultColor = button->getRGBAModulation();
+	std::string defaultImg = button->getTexture();
 
 	SDL_Color clickColor = HexToSDLColor(getProperty(object, "Click Color"));
 	float clickScale = getProperty(object, "Click Scale");
+	auto clickImg = getProperty(object, "Click Image");
+	if (clickImg.is_null()) clickImg = defaultImg;
+
 	SDL_Color hoverColor = HexToSDLColor(getProperty(object, "Hover Color"));
 	float hoverScale = getProperty(object, "Hover Scale");
+	auto hoverImg = getProperty(object, "Hover Image");
+	if (hoverImg.is_null()) hoverImg = defaultImg;
 
 	TextLabel* buttonText = new TextLabel(0, 0, getProperty(object, "Text"), "NunitoSans",
 		-1, -1, 1, TextLabel::TextAlign::Center);
@@ -175,20 +181,23 @@ UIElement* SceneBuilder::createSimpleButton(nlohmann::json& object)
 	buttonText->setColor(HexToSDLColor(getProperty(object, "Text Color")));
 	buttonText->setInteractive(false);
 
-	button->m_userEvents.onClick.addListener([button, clickColor, clickScale](MouseEvent&)
+	button->m_userEvents.onClick.addListener([button, clickColor, clickScale, clickImg](MouseEvent&)
 		{
 			button->setRGBAModulation(clickColor);
 			button->setScale(clickScale);
+			button->setTexture(clickImg);
 		});
-	button->m_userEvents.onHoverEnter.addListener([button, hoverColor, hoverScale](MouseEvent&)
+	button->m_userEvents.onHoverEnter.addListener([button, hoverColor, hoverScale, hoverImg](MouseEvent&)
 		{
 			button->setRGBAModulation(hoverColor);
 			button->setScale(hoverScale);
+			button->setTexture(hoverImg);
 		});
-	button->m_userEvents.onHoverExit.addListener([button, defaultColor](MouseEvent&)
+	button->m_userEvents.onHoverExit.addListener([button, defaultColor, defaultImg](MouseEvent&)
 		{
 			button->setRGBAModulation(defaultColor);
 			button->setScale(1);
+			button->setTexture(defaultImg);
 		});
 
 	return button;

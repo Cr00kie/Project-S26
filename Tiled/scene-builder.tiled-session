@@ -1,5 +1,5 @@
 {
-    "activeFile": "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json",
+    "activeFile": "",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -8,11 +8,11 @@
                 5,
                 7
             ],
-            "scale": 0.25,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3414,
-                "y": 1712
+                "x": 1486,
+                "y": 533.3333333333334
             }
         },
         "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.json": {
@@ -36,13 +36,12 @@
     "map.tileWidth": 1,
     "map.width": 1920,
     "openFiles": [
-        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json"
     ],
     "project": "scene-builder.tiled-project",
-    "property.type": "color",
+    "property.type": "string",
     "recentFiles": [
-        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json",
         "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/SceneElements.json",
+        "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Scenes/testScene.json",
         "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.json",
         "C:/Users/Adrián Isasi/Documents/Project-S26/Project-S26/assets/Tiled/Tilesets/Scene Elements.tsx"
     ],

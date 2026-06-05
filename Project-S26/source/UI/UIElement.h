@@ -25,7 +25,7 @@ private:
 
 	bool m_bWasPressedInside;
 	bool m_bIsHovered;
-	bool m_bInteractive; // TODO: Make possible to set to not interactive
+	bool m_bInteractive;
 
 protected:
 	//If the element is visible,
