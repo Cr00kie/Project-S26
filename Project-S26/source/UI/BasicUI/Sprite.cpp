@@ -5,7 +5,7 @@
 
 
 Sprite::Sprite(float x, float y, const std::string& id, RenderType type, float width, float height, float rotation, float scale, float zOrder) :
-	UIElement(x, y, width, height, rotation, scale, scale, zOrder)
+	UIElement(x, y, width, height, rotation, scale, scale, zOrder), m_animator(this)
 {
 	setTexture(id);
 	setType(type);
@@ -23,6 +23,17 @@ void Sprite::setTexture(const std::string& textureID)
 	m_properties.textureID = textureID;
 	// Request texture
 	m_properties.texture = ServiceLocator::get<ResourceManager>().GetResource<Texture>(m_properties.textureID);
+	resetSourceRegion();
+}
+
+void Sprite::setTexture(const std::string& textureID, SDL_FRect sourceRegion)
+{
+	ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_properties.textureID);
+
+	m_properties.textureID = textureID;
+	// Request texture
+	m_properties.texture = ServiceLocator::get<ResourceManager>().GetResource<Texture>(m_properties.textureID);
+	setSourceRegion(sourceRegion);
 }
 
 void Sprite::setType(RenderType type)
@@ -74,4 +85,11 @@ void Sprite::render(const Mat3f& parentTransform)
 	}
 
 	UIElement::render(parentTransform);
+}
+
+void Sprite::update(float dt)
+{
+	m_animator.update(dt);
+
+	UIElement::update(dt);
 }

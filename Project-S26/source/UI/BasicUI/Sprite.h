@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include "../../Resources/Texture.h"
+#include "../../Tweens/SpriteAnimator.h"
 
 enum RenderType
 {
@@ -31,6 +32,7 @@ struct SpriteProperties
     Texture* texture;
     std::string textureID;
     SDL_Color rgbaModulation = { 255, 255, 255, 255 };
+    SDL_FRect sourceRegion;
     union
     {
         ImageProperties imgProp;
@@ -43,13 +45,18 @@ class Sprite :
 {
 private:
     SpriteProperties m_properties;
+    SpriteAnimator m_animator;
 
 public:
     Sprite(float x, float y, const std::string& id, RenderType type = IMAGE, float width = 0, float height = 0, float rotation = 0, float scale = 1, float zOrder = 0);
     ~Sprite();
 
     void setTexture(const std::string& textureID);
+    void setTexture(const std::string& textureID, SDL_FRect sourceRegion);
     inline const std::string& getTexture() const { return m_properties.textureID; }
+
+    inline void setSourceRegion(SDL_FRect sourceRegion) { m_properties.sourceRegion = sourceRegion; }
+    inline void resetSourceRegion() { m_properties.sourceRegion = { 0, 0, (float)m_properties.texture->getWidth(), (float)m_properties.texture->getHeight() }; }
 
     void setRGBAModulation(SDL_Color modulation) { m_properties.rgbaModulation = modulation; }
     void setOpacity(Uint8 alpha) { m_properties.rgbaModulation.a = alpha; }
@@ -84,6 +91,9 @@ public:
         m_properties.nslProp.botH = bh;
     }
 
+    SpriteAnimator& getAnimator() { return m_animator; }
+
     void render(const Mat3f& parentTransform) override;
+    void update(float dt) override;
 };
 

@@ -2,8 +2,11 @@
 #include <SDL3/SDL_main.h>
 
 // TODO:
-// - Add Trickle down and bubble up logic to UIElement EventHandling?
 // - Add more element factories to editor
+// - Add support for sprite animations
+// - Add scripting?
+// - Add Debug/Logging class
+// - Fix Word wrapping (Next word length is calculated incorrectly)
 
 int main(int argc, char* argv[])
 {

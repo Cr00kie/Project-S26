@@ -7,6 +7,22 @@
     {
       "id": "square",
       "path" : "assets/Images/square.png"
+    },
+    {
+      "id": "btnActive",
+      "path" : "assets/Images/Button Active.png"
+    },
+    {
+      "id": "btnDisable",
+      "path" : "assets/Images/Button Disable.png"
+    },
+    {
+      "id": "btnHover",
+      "path" : "assets/Images/Button Hover.png"
+    },
+    {
+      "id": "btnNormal",
+      "path" : "assets/Images/Button Normal.png"
     }
   ],
   "Sounds": [],

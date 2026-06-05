@@ -12,7 +12,7 @@
                  "id":14,
                  "name":"text",
                  "opacity":1,
-                 "rotation":0,
+                 "rotation":308.676021712532,
                  "text":
                     {
                      "color":"#88ff0000",
@@ -24,12 +24,12 @@
                     },
                  "type":"TextLabel",
                  "visible":true,
-                 "width":288.333333333333,
-                 "x":318,
-                 "y":76.5
+                 "width":369.118356585061,
+                 "x":414.939799220643,
+                 "y":781.200915823553
                 }, 
                 {
-                 "gid":2,
+                 "gid":3,
                  "height":156,
                  "id":17,
                  "name":"Button",
@@ -63,7 +63,7 @@
                         {
                          "name":"Text Color",
                          "type":"color",
-                         "value":"#ff000000"
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"SimpleButton",
@@ -71,15 +71,64 @@
                  "width":722.333,
                  "x":941.500166666666,
                  "y":566
+                }, 
+                {
+                 "gid":1,
+                 "height":207.333333333333,
+                 "id":19,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":310.211714964766,
+                 "type":"Image",
+                 "visible":true,
+                 "width":342,
+                 "x":302.766538163819,
+                 "y":848.181852511972
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "id":7,
+         "layers":[
+                {
+                 "draworder":"topdown",
+                 "id":8,
+                 "name":"Padre",
+                 "objects":[
+                        {
+                         "gid":2,
+                         "height":156,
+                         "id":20,
+                         "name":"cajita",
+                         "opacity":1,
+                         "rotation":0,
+                         "type":"Image",
+                         "visible":true,
+                         "width":157,
+                         "x":72.6666666666667,
+                         "y":211.333333333333
+                        }],
+                 "offsetx":1061.33333333333,
+                 "offsety":272,
+                 "opacity":1,
+                 "type":"objectgroup",
+                 "visible":true,
+                 "x":0,
+                 "y":0
+                }],
+         "name":"Abuelo",
+         "opacity":1,
+         "type":"group",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":18,
+ "nextlayerid":9,
+ "nextobjectid":21,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.12.2",

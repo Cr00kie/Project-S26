@@ -8,7 +8,7 @@
  "margin":0,
  "name":"SceneElements",
  "spacing":0,
- "tilecount":2,
+ "tilecount":6,
  "tiledversion":"1.12.2",
  "tileheight":156,
  "tiles":[
@@ -25,6 +25,34 @@
          "imageheight":156,
          "imagewidth":157,
          "type":"test"
+        }, 
+        {
+         "id":2,
+         "image":"..\/..\/Images\/Button Active.png",
+         "imageheight":38,
+         "imagewidth":114,
+         "type":"btnActive"
+        }, 
+        {
+         "id":3,
+         "image":"..\/..\/Images\/Button Disable.png",
+         "imageheight":38,
+         "imagewidth":114,
+         "type":"btnDisable"
+        }, 
+        {
+         "id":4,
+         "image":"..\/..\/Images\/Button Hover.png",
+         "imageheight":38,
+         "imagewidth":114,
+         "type":"btnHover"
+        }, 
+        {
+         "id":5,
+         "image":"..\/..\/Images\/Button Normal.png",
+         "imageheight":38,
+         "imagewidth":114,
+         "type":"btnNormal"
         }],
  "tilewidth":157,
  "type":"tileset",

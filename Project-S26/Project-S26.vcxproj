@@ -183,6 +183,7 @@
     <ClCompile Include="source\UI\BasicUI\TextLabel.cpp" />
     <ClCompile Include="source\UI\UIElement.cpp" />
     <ClCompile Include="source\UI\BasicUI\Sprite.cpp" />
+    <ClCompile Include="source\Tweens\SpriteAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Events\ElementEventSystem.h" />
@@ -215,6 +216,7 @@
     <ClInclude Include="source\Math\Vec3.h" />
     <ClInclude Include="source\UI\BasicUI\Sprite.h" />
     <ClInclude Include="source\Scenes\TestScene.h" />
+    <ClInclude Include="source\Tweens\SpriteAnimator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
