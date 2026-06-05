@@ -3,6 +3,7 @@
 #include "ResourceLoaders/TextureLoader.h"
 #include "ResourceLoaders/FontLoader.h"
 #include "ResourceLoaders/SoundLoader.h"
+#include "ResourceLoaders/AnimationLoader.h"
 #include "json.hpp"
 #include <iostream>
 
@@ -98,6 +99,17 @@ void ResourceManager::ReadResourcesFile(const std::string& filePath) {
 				});
 		}
 	}
+	if (data.contains("Animations"))
+	{
+		const auto& animations = data["Animations"];
+		for (const auto& anim : animations)
+		{
+			m_PathMap.insert({
+				anim["id"].get<std::string>(),
+				anim["path"].get<std::string>()
+				});
+		}
+	}
 
 	// Close file
 	if (file.is_open())
@@ -110,6 +122,7 @@ void ResourceManager::InitLoaderMap(SDL_Renderer* renderer, MIX_Mixer* sfxMixer,
 	ResourceLoader* textureLoader = m_LoaderVector.emplace_back(new TextureLoader(renderer));
 	ResourceLoader* fontLoader = m_LoaderVector.emplace_back(new FontLoader(renderer, 128));
 	ResourceLoader* soundLoader = m_LoaderVector.emplace_back(new SoundLoader(sfxMixer));
+	ResourceLoader* animLoader = m_LoaderVector.emplace_back(new AnimationLoader());
 
 	// Map all type of resource loaders to file extensions
 
@@ -121,4 +134,6 @@ void ResourceManager::InitLoaderMap(SDL_Renderer* renderer, MIX_Mixer* sfxMixer,
 
 	m_LoaderMap[".wav"] = soundLoader;
 	m_LoaderMap[".mp3"] = soundLoader;
+
+	m_LoaderMap[".anim"] = animLoader;
 }

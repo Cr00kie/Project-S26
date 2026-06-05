@@ -3,7 +3,6 @@
 
 // TODO:
 // - Add more element factories to editor
-// - Make Animations an asset and defined in jsons
 // - Add scripting?
 // - Add Debug/Logging class
 

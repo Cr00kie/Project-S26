@@ -18,16 +18,8 @@ public:
         m_button = sb.Q<Sprite>("Button");
         elapsed = 0;
 
-        Animation* buttonAnim = new Animation();
-        buttonAnim
-            ->addFrame("btnActive", 0.5f)
-            .addFrame("btnHover", 0.5f)
-            .addFrame("btnNormal", 0.5f)
-            .addFrame("btnDisable", 0.5f);
-        buttonAnim->loop = true;
-
         SpriteAnimator& sa = m_button->getAnimator();
-        sa.setAnimation(buttonAnim);
+        sa.setAnimation("buttonAnim");
         sa.play();
     }
     void update(float dt) override

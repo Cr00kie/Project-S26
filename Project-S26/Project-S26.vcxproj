@@ -163,6 +163,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Resources\Animation.cpp" />
+    <ClCompile Include="source\Resources\ResourceLoaders\AnimationLoader.cpp" />
     <ClCompile Include="source\Math\Mat3.cpp" />
     <ClCompile Include="source\AppFacadeService.cpp" />
     <ClCompile Include="source\Audio\AudioManager.cpp" />
@@ -186,6 +188,8 @@
     <ClCompile Include="source\Tweens\SpriteAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Resources\Animation.h" />
+    <ClInclude Include="source\Resources\ResourceLoaders\AnimationLoader.h" />
     <ClInclude Include="source\Events\ElementEventSystem.h" />
     <ClInclude Include="source\Math\Mat3.h" />
     <ClInclude Include="source\AppFacadeService.h" />
@@ -217,6 +221,10 @@
     <ClInclude Include="source\UI\BasicUI\Sprite.h" />
     <ClInclude Include="source\Scenes\TestScene.h" />
     <ClInclude Include="source\Tweens\SpriteAnimator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Animations\buttonTexAnim.anim" />
+    <None Include="assets\Animations\spriteSheetAnim.anim" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

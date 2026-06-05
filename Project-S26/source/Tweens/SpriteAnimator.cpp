@@ -28,6 +28,15 @@ void SpriteAnimator::update(float dt)
 	}
 }
 
+void SpriteAnimator::setAnimation(const std::string& id)
+{
+	if (m_animationID == id) return;
+	ServiceLocator::get<ResourceManager>().ReleaseResource<Animation>(m_animationID);
+
+	m_animationID = id;
+	m_animation = ServiceLocator::get<ResourceManager>().GetResource<Animation>(m_animationID);
+}
+
 AnimationFrame::AnimationFrame(const std::string& id, float duration) :
 	textureID(id), duration(duration)
 {

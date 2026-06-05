@@ -18,6 +18,8 @@ Sprite::~Sprite()
 
 void Sprite::setTexture(const std::string& textureID)
 {
+	if (m_properties.textureID == textureID) return;
+
 	ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_properties.textureID);
 
 	m_properties.textureID = textureID;
@@ -28,12 +30,13 @@ void Sprite::setTexture(const std::string& textureID)
 
 void Sprite::setTexture(const std::string& textureID, SDL_FRect sourceRegion)
 {
+	setSourceRegion(sourceRegion);
+	if (m_properties.textureID == textureID) return;
 	ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_properties.textureID);
 
 	m_properties.textureID = textureID;
 	// Request texture
 	m_properties.texture = ServiceLocator::get<ResourceManager>().GetResource<Texture>(m_properties.textureID);
-	setSourceRegion(sourceRegion);
 }
 
 void Sprite::setType(RenderType type)

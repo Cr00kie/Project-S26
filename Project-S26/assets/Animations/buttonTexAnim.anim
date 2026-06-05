@@ -1,0 +1,17 @@
+{
+  "frames": [
+    {
+      "srcID": "btnActive",
+      "duration": 0.1
+    },
+    {
+      "srcID": "btnDisable",
+      "duration": 0.1
+    },
+    {
+      "srcID": "btnHover",
+      "duration": 0.1
+    }
+  ],
+  "loop": true
+}
