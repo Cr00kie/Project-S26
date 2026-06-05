@@ -62,9 +62,9 @@ TextLabel::setText(const std::string& newText) {
 	// Clear previously parsed text
 	m_tokenizedText.clear();
 
-	TextLine currentLine;
+	TextLine textLine;
 
-	// Parse text to tokens
+	// Parse all text to single token line
 	for (std::size_t i = 0; i < m_text.size(); ++i)
 	{
 		switch (m_text[i])
@@ -80,10 +80,36 @@ TextLabel::setText(const std::string& newText) {
 		} break;
 				// Parse space glyphs separetly to use as word separators
 		case ' ': {
+			textLine.tokens.push_back({ TokenType::Space, unsigned char(' ') });
+		}break;
+				//Parse new line token separatly to differentiate
+		case '\n': {
+			textLine.tokens.push_back({ TokenType::NewLine });
+		}break;
+				 // Parse the rest of glyphs
+		default: {
+			unsigned char c = m_text[i];
+			textLine.tokens.push_back({ TokenType::Glyph, c, currentGlyphStyle });
+			++m_glyphCount;
+		}break;
+		}
+
+	}
+
+	// Split line in sections that fit the width of the box
+	TextLine currentLine;
+	auto& tokens = textLine.tokens;
+
+	for (std::size_t i = 0; i < tokens.size(); ++i)
+	{
+		switch (tokens[i].type)
+		{
+				// Parse space glyphs separetly to use as word separators
+		case TokenType::Space: {
 			currentLine.tokens.push_back({ TokenType::Space, unsigned char(' ') });
 
 			// Check if next word fits
-			float nextWordWidth = CalculateNextWordSize(int(i), currentLine.tokens);
+			float nextWordWidth = CalculateNextWordSize(int(i), textLine.tokens);
 			// If next word doesn't fit
 			if (currentLine.width + nextWordWidth > m_fW)
 			{
@@ -100,7 +126,7 @@ TextLabel::setText(const std::string& newText) {
 		}break;
 				//Parse new line, it will always make a new line, 
 				//even if the next word fits, to respect the explicit new line
-		case '\n': {
+		case TokenType::NewLine: {
 			if (!currentLine.tokens.empty()) {
 				m_tokenizedText.push_back(currentLine);
 				currentLine.tokens.clear();
@@ -109,16 +135,15 @@ TextLabel::setText(const std::string& newText) {
 		}break;
 				 // Parse the rest of glyphs
 		default: {
-			unsigned char c = m_text[i];
-			currentLine.tokens.push_back({ TokenType::Glyph, c, currentGlyphStyle });
-			currentLine.width += m_font->getGlyph(c)->w * m_fLetterSpacing;
+			currentLine.tokens.push_back(tokens[i]);
+			currentLine.width += m_font->getGlyph(tokens[i].glyph)->w * m_fLetterSpacing;
 			++m_glyphCount;
 		}break;
 		}
 
 	}
 
-	// last word doesnt depend on a space at the end with this
+	// Add last line if it wasn't added yet (could have been added if it finished with space)
 	if (!currentLine.tokens.empty())
 	{
 		m_tokenizedText.push_back(currentLine);

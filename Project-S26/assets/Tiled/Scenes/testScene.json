@@ -17,14 +17,14 @@
                     {
                      "color":"#88ff0000",
                      "fontfamily":"Nunito Sans",
-                     "pixelsize":128,
+                     "pixelsize":120,
                      "text":"Hello World",
                      "valign":"center",
                      "wrap":true
                     },
                  "type":"TextLabel",
                  "visible":true,
-                 "width":369.118356585061,
+                 "width":698.161053161253,
                  "x":414.939799220643,
                  "y":781.200915823553
                 }, 

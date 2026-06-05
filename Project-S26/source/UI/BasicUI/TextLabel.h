@@ -29,7 +29,8 @@ private:
     enum class TokenType
     {
         Glyph,
-        Space
+        Space,
+        NewLine
     };
 
     // Token that holds preprocessed information of the glyph to render

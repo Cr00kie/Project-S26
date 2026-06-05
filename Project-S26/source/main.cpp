@@ -3,10 +3,9 @@
 
 // TODO:
 // - Add more element factories to editor
-// - Add support for sprite animations
+// - Make Animations an asset and defined in jsons
 // - Add scripting?
 // - Add Debug/Logging class
-// - Fix Word wrapping (Next word length is calculated incorrectly)
 
 int main(int argc, char* argv[])
 {
