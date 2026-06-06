@@ -2,9 +2,38 @@
 #include "../Events/Event.h"
 #include "../UI/UIElement.h"
 #include "../Math/Mat3.h"
+#include "../Debug.h"
 
-SceneManager::SceneManager() :
-	m_currentScene(nullptr)
+#include <algorithm>
+
+void SceneManager::cleanActiveScenes()
+{
+	// Erase all pending to erase scenes
+	m_activeScenes.erase(std::remove_if(m_activeScenes.begin(), m_activeScenes.end(), [this](Scene* s)
+		{
+			if (!s->active)
+			{
+				return true;
+			}
+			return false;
+		}), m_activeScenes.end());
+}
+
+void SceneManager::pourPendingScenes()
+{
+	for (Scene* pendingScene : m_pendingToActivateScenes)
+	{
+		m_activeScenes.push_back(pendingScene);
+		pendingScene->active = true;
+	}
+	m_pendingToActivateScenes.clear();
+	std::sort(m_activeScenes.begin(), m_activeScenes.end(), [](const Scene* a, const Scene* b)
+		{
+			return *a < *b;
+		});
+}
+
+SceneManager::SceneManager()
 {
 }
 
@@ -12,7 +41,7 @@ SceneManager::~SceneManager()
 {
 	for (auto& s : m_scenes)
 	{
-		delete s.second;
+		delete s.second.root;
 	}
 
 	m_scenes.clear();
@@ -20,12 +49,23 @@ SceneManager::~SceneManager()
 
 void SceneManager::onEvent(Event& ev)
 {
+	cleanActiveScenes();
+
 	switch (ev.getType())
 	{
 	case Event::Type::MOUSE: {
 		MouseEvent* mev = ev.getMouse();
 		// Find event target
-		UIElement* target = m_currentScene->findEventTarget(mev->getX(), mev->getY());
+		UIElement* target = nullptr;
+		for (Scene* scene : m_activeScenes)
+		{
+			target = scene->root->findEventTarget(mev->getX(), mev->getY());
+			if (target)
+			{
+				LOG("Target in scene: " + scene->key + '\n');
+				break;
+			}
+		}
 		ev.setEventTarget(target);
 	}break;
 	case Event::Type::KEY: break;
@@ -33,30 +73,86 @@ void SceneManager::onEvent(Event& ev)
 	}
 	
 	// Propragate event
-	m_currentScene->onEvent(ev);
+	for (Scene* scene : m_activeScenes)
+	{
+		scene->root->onEvent(ev);
+		if (ev.handled() && scene->captureEvents)
+		{
+			LOG("Event captured by: " + scene->key + '\n');
+			break;
+		}
+	}
 }
 
 void SceneManager::render()
 {
-	m_currentScene->render(Mat3f(1.f));
+	cleanActiveScenes();
+
+	for (auto it = m_activeScenes.rbegin(); it != m_activeScenes.rend(); ++it)
+	{
+		Scene* scene = (*it);
+		if(scene->render) scene->root->render(Mat3f(1.f));
+	}
 }
 
 void SceneManager::update(float dt)
 {
-	m_currentScene->update(dt);
-}
+	cleanActiveScenes();
+	pourPendingScenes();
 
-void SceneManager::addScene(const SceneKey& name, Scene* scene)
-{
-	m_scenes.insert({ name, scene });
-
-	if (!m_currentScene)
+	for (Scene* scene : m_activeScenes)
 	{
-		m_currentScene = scene;
+		if (scene->update) scene->root->update(dt);
 	}
 }
 
-void SceneManager::setCurrentScene(const SceneKey& name)
+void SceneManager::addScene(const SceneKey& name, UIElement* root, bool captureEvents, bool update, bool render)
 {
-	m_currentScene = m_scenes[name];
+	if (m_scenes.contains(name))
+	{
+		DEBUG.error("Scene with name: " + name + ", already exists.\n");
+		return;
+	}
+
+	m_scenes.insert({ name, {name, root, update, render, captureEvents} });
+
+	LOG("Scene added: " + name + '\n');
+}
+
+bool SceneManager::isActive(const SceneKey& name)
+{
+	return m_scenes.at(name).active;
+}
+
+void SceneManager::activateScene(const SceneKey& name, int order)
+{
+	// Guard against duplicates
+	Scene& scene = m_scenes.at(name);
+	if (scene.active) return;
+
+	scene.order = order;
+	scene.active = true;
+
+	m_pendingToActivateScenes.push_back(&scene);
+}
+
+void SceneManager::deactivateScene(const SceneKey& name)
+{
+	// Linear search should be fine
+	m_scenes.at(name).active = false;
+}
+
+void SceneManager::setSceneUpdate(const SceneKey& name, bool update)
+{
+	m_scenes.at(name).update = update;
+}
+
+void SceneManager::setSceneRender(const SceneKey& name, bool render)
+{
+	m_scenes.at(name).render = render;
+}
+
+void SceneManager::setSceneCaptureEvents(const SceneKey& name, bool captures)
+{
+	m_scenes.at(name).captureEvents = captures;
 }

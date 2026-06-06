@@ -4,7 +4,6 @@
 // TODO:
 // - Add more element factories to editor
 // - Add scripting?
-// - Add Debug/Logging class
 // - Create a Slider
 // - Make scene manager support having more than one scene at the same time (Have per scene, isUpdating and isRendering)
 
