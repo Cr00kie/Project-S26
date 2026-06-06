@@ -104,7 +104,7 @@ public:
         m_particleTexture = ServiceLocator::get<ResourceManager>().GetResource<Texture>(m_particleTextureID);
     }
 
-    inline void setEmissionAmount(std::size_t amount) { m_emissionRate = amount; }
+    inline void setEmissionAmount(std::size_t amount) { m_emissionAmount = amount; }
     inline void setEmissionRate(float emissionRate) { m_emissionRate = emissionRate; }
     inline void startEmitting() { m_isEmitting = true; }
     inline void stopEmitting() { m_isEmitting = false; }

@@ -4,12 +4,15 @@
 #include "Tweens/TweenManager.h"
 #include "Audio/AudioManager.h"
 #include "Scenes/SceneManager.h"
+#include "Events/InputManager.h"
+#include "Debug.h"
 
 #include "Scenes/TestScene.h"
 
 #include <SDL3/SDL.h>
 #include <memory>
 #include <tuple>
+#include <iostream>
 
 bool SDLApplication::init()
 {
@@ -95,6 +98,8 @@ bool SDLApplication::init()
 
 void SDLApplication::run()
 {
+	INFO("Game loop started\n");
+
 	uint64_t lastTime = SDL_GetTicks();
 	while (m_bIsRunning)
 	{
@@ -117,31 +122,41 @@ void SDLApplication::run()
 
 void SDLApplication::initGlobalServices()
 {
+	m_debug = new Debug(m_pRenderer);
+	ServiceLocator::registerService(m_debug);
+	INFO("Debug module initialized\n");
+
 	// Register EventBus as global service
 	ServiceLocator::registerService(new EventBus());
+	INFO("Event bus initialized\n");
 
 	// Register ResourceManager as global service
 	ServiceLocator::registerService(new ResourceManager("assets/AssetsIDs.json", m_pRenderer, m_sfxMixer, m_musicMixer));
+	INFO("Resource manager initialized\n");
 
 	ServiceLocator::registerService(new AudioManager(m_sfxMixer, m_musicMixer));
+	INFO("Audio manager initialized\n");
 
 	// Register InputManager as global service
 	auto const inputManager = new InputManager();
 	ServiceLocator::registerService(inputManager);
 	m_inputManager = inputManager;
+	INFO("Input manager initialized\n");
 
 	// Register TweenManager as global service
 	ServiceLocator::registerService(new TweenManager());
+	INFO("Tween manager initialized\n");
 
 	// Register AppFacadeService as global service
 	ServiceLocator::registerService(new AppFacadeService(this));
+	INFO("App facade initialized\n");
 
 	// Register SceneManager as global service
 	m_sceneManager = new SceneManager();
 	ServiceLocator::registerService(m_sceneManager);
+	INFO("Scene manager initialized\n");
 
 	m_sceneManager->addScene("test", new TestScene());
-
 }
 
 void SDLApplication::handleEvents() {
@@ -164,6 +179,7 @@ void SDLApplication::render()
 
 	// Render scenes
 	m_sceneManager->render();
+	m_debug->render();
 	
 	//m_SceneManager->render();
 	SDL_RenderPresent(m_pRenderer);
@@ -171,6 +187,7 @@ void SDLApplication::render()
 
 void SDLApplication::quit()
 {
+	INFO("App quitted\n");
 	ServiceLocator::unregister<SceneManager>();
 
 	// Clear Event Bus events
@@ -186,6 +203,7 @@ void SDLApplication::quit()
 	ServiceLocator::unregister<ResourceManager>();
 	ServiceLocator::unregister<EventBus>();
 	ServiceLocator::unregister<AppFacadeService>();
+	ServiceLocator::unregister<Debug>();
 	ServiceLocator::clear();
 
 	// Destroy renderer

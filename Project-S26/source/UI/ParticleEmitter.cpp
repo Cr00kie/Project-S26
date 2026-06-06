@@ -86,8 +86,8 @@ void ParticleEmitter::update(float dt)
 
 void ParticleEmitter::render(const Mat3f& parentTransform)
 {
-	float width = m_particleTexture->getWidth();
-	float height = m_particleTexture->getHeight();
+	float width = (float)m_particleTexture->getWidth();
+	float height = (float)m_particleTexture->getHeight();
 
 	for (Particle* particle : m_activeParticles)
 	{

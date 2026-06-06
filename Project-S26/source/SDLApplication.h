@@ -10,10 +10,11 @@
 #include <string>
 
 #include "Tools/ServiceLocator.h"
-#include "Events/InputManager.h"
 
-#include "AppFacadeService.h"
-#include "Scenes/SceneManager.h"
+class Debug;
+class SceneManager;
+class AppFacadeService;
+class InputManager;
 
 // The main application class that initializes SDL,
 // creates the window and renderer, and runs the main game loop
@@ -59,6 +60,8 @@ private:
 	InputManager* m_inputManager;
 	// Scene manager
 	SceneManager* m_sceneManager;
+
+	Debug* m_debug;
 
 	// The target resolution and FPS of the application
 	const int M_RESOLUTIONWIDTH = 1920;

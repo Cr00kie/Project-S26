@@ -1,0 +1,4 @@
+[33mWARNING: [SDLApplication.cpp:128 | SDLApplication::initGlobalServices] [05:12:39] > Debug initialized
+[0m[SDLApplication.cpp:129 | initGlobalServices] [05:12:39] > Debug initialized!
+[31mERROR: [SDLApplication.cpp:100 | SDLApplication::run] [05:12:39] > Starting game loop!
+[0m[SDLApplication.cpp:118 | SDLApplication::run] [05:12:39] > Quitting application!

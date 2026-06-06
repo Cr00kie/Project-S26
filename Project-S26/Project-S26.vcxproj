@@ -189,6 +189,7 @@
     <ClCompile Include="source\Tweens\SpriteAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\Tools\ObjectPool.h" />
     <ClInclude Include="source\UI\ParticleEmitter.h" />
     <ClInclude Include="source\Resources\Animation.h" />

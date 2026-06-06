@@ -1,6 +1,6 @@
 #include "SceneBuilder.h"
 #include <fstream>
-#include <iostream>
+#include "../Debug.h"
 #include "../UI/BasicUI/Sprite.h"
 #include "../UI/BasicUI/TextLabel.h"
 #include "../Math/Vec2.h"
@@ -98,8 +98,6 @@ void SceneBuilder::loadLayerObjects(UIElement* container, nlohmann::json& layerO
 {
 	for (nlohmann::json& object : layerObjects)
 	{
-		std::cout << object["id"] << " : " << object["type"] << '\n';
-
 		createObject(container, object);
 	}
 }
@@ -110,7 +108,7 @@ void SceneBuilder::createObject(UIElement* container, nlohmann::json& object)
 	auto itFactory = m_Factories.find(type);
 
 	if (itFactory == m_Factories.end())
-		std::cout << "Unkown type of object in scene: " << type << '\n';
+		ERROR("Unkown type of object in scene: " + type + '\n');
 	else
 	{
 		// Create Object
@@ -121,6 +119,7 @@ void SceneBuilder::createObject(UIElement* container, nlohmann::json& object)
 		std::string name = object["name"];
 		if (name == "") name = std::to_string(int(object["id"]));
 		m_UIElements.insert(std::make_pair(name, obj));
+		LOG(name + " : " + std::string(type) + '\n');
 	}
 }
 
@@ -235,7 +234,7 @@ Sprite* SceneBuilder::createSprite(nlohmann::json& object)
 	auto modulation = getProperty(object, "Modulation");
 
 	bool visible = object["visible"];
-	Uint8 opacity = float(object["opacity"]) * 255;
+	Uint8 opacity = Uint8(float(object["opacity"]) * 255);
 	std::string id = m_TiledTileset[object["gid"] - m_iFirstGID]["type"];
 
 	Sprite* sprite = new Sprite(finalPosition.getX(), finalPosition.getY(), id, IMAGE, width, height, rotation);

@@ -21,9 +21,9 @@ public:
 
         m_emitter = new ParticleEmitter(800, 800, 100, 0.5, true, 25);
         addChild(m_emitter);
-        m_emitter->setParticleVelocity(Vec2f(200,200), Vec2f(-200,-200));
-        m_emitter->setParticleAcceleration(Vec2f(0, 50));
-        m_emitter->setParticleLifetime(1, 1.9);
+        m_emitter->setParticleVelocity(Vec2f(200.f,200.f), Vec2f(-200.f,-200.f));
+        m_emitter->setParticleAcceleration(Vec2f(0.f, 50.f));
+        m_emitter->setParticleLifetime(1.f, 1.9f);
         m_emitter->setParticleAngularVel(1.f);
         emited = false;
     }
