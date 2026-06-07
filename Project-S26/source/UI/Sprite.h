@@ -1,10 +1,10 @@
 #pragma once
-#include "../UIElement.h"
+#include "UIElement.h"
 
 #include <cassert>
 
-#include "../../Resources/Texture.h"
-#include "../../Tweens/SpriteAnimator.h"
+#include "../Resources/Texture.h"
+#include "../Tweens/SpriteAnimator.h"
 
 enum RenderType
 {

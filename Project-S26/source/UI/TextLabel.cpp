@@ -1,7 +1,7 @@
 ﻿#include "TextLabel.h"
-#include "../../Tools/ServiceLocator.h"
-#include "../../Resources/ResourceManager.h"
-#include "../../Resources/Font.h"
+#include "../Tools/ServiceLocator.h"
+#include "../Resources/ResourceManager.h"
+#include "../Resources/Font.h"
 #include <cassert>
 #include <sstream>
 #include <numbers>

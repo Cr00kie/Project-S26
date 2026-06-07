@@ -1,5 +1,5 @@
 #include "SpriteAnimator.h"
-#include "../UI/BasicUI/Sprite.h"
+#include "../UI/Sprite.h"
 #include "../Resources/Texture.h"
 
 #include "../Tools/ServiceLocator.h"

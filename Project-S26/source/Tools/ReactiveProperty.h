@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <functional>
-#include <vector>
+#include <list>
+#include "../Events/EventBus.h"
 
 // A reactive property that allows subscribing to changes in its value
 // It holds a value of type T and a list of subscribers that are notified when the value changes
@@ -10,7 +11,7 @@ private:
 	// The current value of the reactive property
     T m_value;
 	// A list of subscribers that are notified when the value changes
-    std::vector<std::function<void(const T&)>> m_subscribers;
+    std::list<std::function<void(const T&)>> m_subscribers;
 
 public:
     // Creates an empty reactive property
@@ -35,9 +36,16 @@ public:
     }
     
 	// Subscribe to changes in the reactive property by providing a callback function
-    void subscribe(std::function<void(const T&)> callback) {
+    Subscription subscribe(std::function<void(const T&)> callback) {
         m_subscribers.push_back(callback);
         callback(m_value);
+        auto it = --m_subscribers.end();
+        return Subscription([this, it]() { m_subscribers.erase(it); });
+    }
+    template<typename ObjT, typename Method>
+    Subscription subscribe(ObjT* obj, Method method)
+    {
+        return subscribe([obj, method](const T& ev) { (obj->*method)(ev); });
     }
     
 	// Assignment operator to set a new value for the reactive property

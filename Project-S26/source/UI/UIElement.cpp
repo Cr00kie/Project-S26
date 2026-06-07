@@ -160,7 +160,7 @@ void UIElement::HandleMouseEvent(Event& ev)
 	{
 		if (m_bIsHovered)
 		{
-			m_userEvents.onHoverExit.invoke(*mev);
+			m_pointerEvents.onHoverExit.invoke(*mev);
 			m_bIsHovered = false;
 		}
 		m_bWasPressedInside = false;
@@ -177,7 +177,7 @@ void UIElement::HandleMouseEvent(Event& ev)
 
 		if (!m_bIsHovered)
 		{
-			m_userEvents.onHoverEnter.invoke(*mev);
+			m_pointerEvents.onHoverEnter.invoke(*mev);
 			m_bIsHovered = true;
 		}
 
@@ -190,13 +190,13 @@ void UIElement::HandleMouseEvent(Event& ev)
 		}
 		else if (mouseState == MouseEvent::State::LEFT_PRESSING)
 		{
-			m_userEvents.onHold.invoke(*mev);
+			m_pointerEvents.onHold.invoke(*mev);
 		}
 		// If we were pressed and click is released
 		else if (m_bWasPressedInside && mouseState == MouseEvent::State::LEFT_RELEASED)
 		{
 			// If we are still hovered notify all click callbacks
-			m_userEvents.onClick.invoke(*mev);
+			m_pointerEvents.onClick.invoke(*mev);
 			m_bWasPressedInside = false;
 		}
 
@@ -208,7 +208,7 @@ void UIElement::HandleMouseEvent(Event& ev)
 		// If we were hovered call hover exit callbacks
 		if (m_bIsHovered)
 		{
-			m_userEvents.onHoverExit.invoke(*mev);
+			m_pointerEvents.onHoverExit.invoke(*mev);
 			m_bIsHovered = false;
 		}
 		m_bWasPressedInside = false;

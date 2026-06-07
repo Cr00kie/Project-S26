@@ -100,12 +100,8 @@ void SDLApplication::run()
 {
 	INFO("Game loop started\n");
 
-	m_sceneManager->addScene("Back", new TestScene(M_RESOLUTIONWIDTH / 2, M_RESOLUTIONHEIGHT / 2, 1000, 1000, { 255, 255, 255, 255 }));
-	m_sceneManager->addScene("Middle", new TestScene(M_RESOLUTIONWIDTH / 2, M_RESOLUTIONHEIGHT / 2, 666, 666, { 255, 0, 0, 255 }));
-	m_sceneManager->addScene("Front", new TestScene(M_RESOLUTIONWIDTH / 2, M_RESOLUTIONHEIGHT / 2, 333, 333, { 0, 255, 0, 255 }));
+	m_sceneManager->addScene("Front", new TestScene());
 
-	m_sceneManager->activateScene("Back", 2);
-	m_sceneManager->activateScene("Middle", 1);
 	m_sceneManager->activateScene("Front", 0);
 
 	uint64_t lastTime = SDL_GetTicks();

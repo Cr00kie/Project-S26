@@ -62,7 +62,6 @@ void SceneManager::onEvent(Event& ev)
 			target = scene->root->findEventTarget(mev->getX(), mev->getY());
 			if (target)
 			{
-				LOG("Target in scene: " + scene->key + '\n');
 				break;
 			}
 		}
@@ -78,7 +77,6 @@ void SceneManager::onEvent(Event& ev)
 		scene->root->onEvent(ev);
 		if (ev.handled() && scene->captureEvents)
 		{
-			LOG("Event captured by: " + scene->key + '\n');
 			break;
 		}
 	}

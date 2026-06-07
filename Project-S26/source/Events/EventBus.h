@@ -33,6 +33,7 @@ private:
 
 
 public:
+	Subscription(){}
 	// Creates a Subscription object used to unsubscribe from events
 	// SUBSCRIPTIONS OBJECTS ARE RETURNED BY EVENT BUSES OR OTHER CLASSES.
 	// Arguments:

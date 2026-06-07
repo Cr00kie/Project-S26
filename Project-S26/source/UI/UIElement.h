@@ -50,7 +50,7 @@ protected:
 	void markForCleanup() { m_bNeedsCleanup = true; }
 
 public:
-	ElementEventSystem m_userEvents;
+	ElementEventSystem m_pointerEvents;
 	UIElement(float x, float y, float width = 0, float height = 0, float rotation = 0, float scaleX = 1, float scaleY = 1, float zOrder = 0);
 	virtual ~UIElement();
 

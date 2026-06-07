@@ -1,7 +1,7 @@
 #include "Sprite.h"
 
-#include "../../Tools/ServiceLocator.h"
-#include "../../Resources/ResourceManager.h"
+#include "../Tools/ServiceLocator.h"
+#include "../Resources/ResourceManager.h"
 
 
 Sprite::Sprite(float x, float y, const std::string& id, RenderType type, float width, float height, float rotation, float scale, float zOrder) :

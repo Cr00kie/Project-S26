@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "../UIElement.h"
-#include "../../Resources/Font.h"
+#include "UIElement.h"
+#include "../Resources/Font.h"
 
 #include <string>
 #include <memory>

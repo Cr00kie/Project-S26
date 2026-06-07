@@ -1,8 +1,8 @@
 #include "SceneBuilder.h"
 #include <fstream>
 #include "../Debug.h"
-#include "../UI/BasicUI/Sprite.h"
-#include "../UI/BasicUI/TextLabel.h"
+#include "../UI/Sprite.h"
+#include "../UI/TextLabel.h"
 #include "../Math/Vec2.h"
 #include "../Math/Mat3.h"
 
@@ -180,19 +180,19 @@ UIElement* SceneBuilder::createSimpleButton(nlohmann::json& object)
 	buttonText->setColor(HexToSDLColor(getProperty(object, "Text Color")));
 	buttonText->setInteractive(false);
 
-	button->m_userEvents.onClick.addListener([button, clickColor, clickScale, clickImg](MouseEvent&)
+	button->m_pointerEvents.onClick.addListener([button, clickColor, clickScale, clickImg](MouseEvent&)
 		{
 			button->setRGBAModulation(clickColor);
 			button->setScale(clickScale);
 			button->setTexture(clickImg);
 		});
-	button->m_userEvents.onHoverEnter.addListener([button, hoverColor, hoverScale, hoverImg](MouseEvent&)
+	button->m_pointerEvents.onHoverEnter.addListener([button, hoverColor, hoverScale, hoverImg](MouseEvent&)
 		{
 			button->setRGBAModulation(hoverColor);
 			button->setScale(hoverScale);
 			button->setTexture(hoverImg);
 		});
-	button->m_userEvents.onHoverExit.addListener([button, defaultColor, defaultImg](MouseEvent&)
+	button->m_pointerEvents.onHoverExit.addListener([button, defaultColor, defaultImg](MouseEvent&)
 		{
 			button->setRGBAModulation(defaultColor);
 			button->setScale(1);
