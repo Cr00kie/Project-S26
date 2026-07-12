@@ -47,6 +47,67 @@ SceneManager::~SceneManager()
 	m_scenes.clear();
 }
 
+void SceneManager::processInput(const InputState& state)
+{
+	// Mouse movement
+	if (state.mouse.x != state.mouse.prevX || state.mouse.y != state.mouse.prevY)
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::MOVED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+
+	// Left button
+	if (state.mouse.left.justPressed())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::LEFT_PRESSED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+	else if (state.mouse.left.isPressed())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::LEFT_PRESSING, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+	if (state.mouse.left.justReleased())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::LEFT_RELEASED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+
+	// Middle button
+	if (state.mouse.middle.justPressed())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::MIDDLE_PRESSED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+	else if (state.mouse.middle.isPressed())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::MIDDLE_PRESSING, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+	if (state.mouse.middle.justReleased())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::MIDDLE_RELEASED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+
+	// Right button
+	if (state.mouse.right.justPressed())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::RIGHT_PRESSED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+	else if (state.mouse.right.isPressed())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::RIGHT_PRESSING, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+	if (state.mouse.right.justReleased())
+	{
+		Event ev{ MouseEvent{ MouseEvent::State::RIGHT_RELEASED, state.mouse.x, state.mouse.y } };
+		onEvent(ev);
+	}
+}
+
 void SceneManager::onEvent(Event& ev)
 {
 	cleanActiveScenes();

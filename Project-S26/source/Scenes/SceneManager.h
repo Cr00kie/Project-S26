@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "../Input/InputState.h"
 
 class Event;
 class UIElement;
@@ -37,6 +38,7 @@ public:
 	SceneManager();
 	~SceneManager();
 
+	void processInput(const InputState& state);
 	void onEvent(Event& ev);
 	void render();
 	void update(float dt);

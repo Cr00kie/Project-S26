@@ -14,7 +14,7 @@ class TestScene :
 public:
     TestScene() : UIElement(0,0)
     {
-        Slider* slider = new Slider(500, 500, 0, 500, 50, 0);
+        Slider* slider = new Slider(500, 500, 0, 500, 50, 90);
         slider->setValue(0.5f);
         slider->addValueChangedListener([this](const float& v)
             {

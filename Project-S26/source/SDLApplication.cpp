@@ -4,7 +4,8 @@
 #include "Tweens/TweenManager.h"
 #include "Audio/AudioManager.h"
 #include "Scenes/SceneManager.h"
-#include "Events/InputManager.h"
+#include "Input/InputManager.h"
+#include "AppFacadeService.h"
 #include "Debug.h"
 
 #include "Scenes/TestScene.h"
@@ -104,6 +105,22 @@ void SDLApplication::run()
 
 	m_sceneManager->activateScene("Front", 0);
 
+	InputContext& context = m_inputManager->actions().createContext("gameplay");
+	context.createAction("fire", 0)
+		.addBinding(Left)
+		.addBinding(SDL_SCANCODE_SPACE)
+		.addBinding(SDL_GAMEPAD_BUTTON_SOUTH);
+
+	context.createAction("move", 0, 0.2f)
+		.addBinding(SDL_SCANCODE_A, -1)
+		.addBinding(SDL_SCANCODE_D, 1)
+		.addBinding(SDL_SCANCODE_W, 0, 1)
+		.addBinding(SDL_SCANCODE_S, 0, -1)
+		.addBinding(SDL_GAMEPAD_AXIS_LEFTX, 1, 0)
+		.addBinding(SDL_GAMEPAD_AXIS_LEFTY, 0, 1);
+
+	m_inputManager->actions().pushActiveContext("gameplay");
+
 	uint64_t lastTime = SDL_GetTicks();
 	while (m_bIsRunning)
 	{
@@ -112,6 +129,16 @@ void SDLApplication::run()
 		lastTime = currentTime;
 
 		handleEvents();
+
+		if (m_inputManager->actions().getContext("gameplay").getAction("fire").justReleased())
+		{
+			LOG("FIRE PRESSED\n");
+		}
+		Vec2f val = m_inputManager->actions().getContext("gameplay").getAction("move").readVec2f();
+		if (val.getX() || val.getY())
+		{
+			LOG("MOVE VALUE: " + std::to_string(val.getX()) + ", " +std::to_string(val.getY()) + "\n");
+		}
 		update(deltaTime);
 		render();
 
@@ -163,6 +190,7 @@ void SDLApplication::initGlobalServices()
 
 void SDLApplication::handleEvents() {
 	m_inputManager->handleInputs();
+	m_sceneManager->processInput(m_inputManager->state());
 }
 
 void SDLApplication::update(float deltaTime)
