@@ -8,8 +8,11 @@
 #include "../Tools/ServiceLocator.h"
 #include "../Resources/Sound.h"
 
+#include "../Lua/LuaBindingTools.h"
+
 class AudioManager
 {
+	LUA_EXPOSE_TYPE(AudioManager, AudioManager, NO_CONSTRUCTOR, NO_BASE)
 private:
 
 	// A struct that represents a track in the audio manager, 
@@ -55,6 +58,7 @@ public:
 	// the pool, if there are no free tracks it will create a new one and add it to the pool
 	//  - audioKey: the key of the audio resource to play
 	void playAudio(std::string audioKey);
+	LUA_EXPOSE_MEMBER(AudioManager, playAudio, play_sound)
 	// Plays a music track with the given id,
 	// it will look for the music resource in the ResourceManager and play it using the music track, if the music track is already being used it will stop it before playing the new one.
 	// loops parameter specifies how many times to loop the music track after it finishes playing once,

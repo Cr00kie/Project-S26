@@ -1,5 +1,4 @@
 #include "SDLApplication.h"
-#include <SDL3/SDL_main.h>
 
 // TODO:
 // - Add more element factories to editor

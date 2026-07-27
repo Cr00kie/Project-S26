@@ -12,9 +12,9 @@
 #include "Tools/ServiceLocator.h"
 
 class Debug;
-class SceneManager;
 class AppFacadeService;
 class InputManager;
+class World;
 
 // The main application class that initializes SDL,
 // creates the window and renderer, and runs the main game loop
@@ -58,8 +58,9 @@ private:
 	ServiceLocator m_ServiceLocator;
 	// The input manager that manages the input of the application
 	InputManager* m_inputManager;
-	// Scene manager
-	SceneManager* m_sceneManager;
+	
+	World* m_world;
+	
 
 	Debug* m_debug;
 

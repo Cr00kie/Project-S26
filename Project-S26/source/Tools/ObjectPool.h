@@ -18,6 +18,31 @@ public:
 		m_pool = m_alloc.allocate(m_size);
 	}
 
+	ObjectPool(ObjectPool&& other) noexcept :
+		m_size(other.m_size), m_lastUsed(other.m_lastUsed),
+		m_used(other.m_used), m_alloc(other.m_alloc),
+		m_pool(other.m_pool)
+	{
+		other.m_alloc.deallocate(other.m_pool, other.m_size);
+		other.m_size = 0;
+	}
+
+	ObjectPool& operator=(ObjectPool&& other) noexcept
+	{
+		if (this == &other) return *this;
+
+		m_size = other.m_size;
+		m_lastUsed = other.m_lastUsed;
+		m_used = other.m_used;
+		m_alloc = other.m_alloc;
+		m_pool = other.m_pool;
+
+		other.m_alloc.deallocate(other.m_pool, other.m_size);
+		other.m_size = 0;
+
+		return *this;
+	}
+
 	ObjectPool(const ObjectPool&) = delete;
 	ObjectPool& operator=(const ObjectPool&) = delete;
 

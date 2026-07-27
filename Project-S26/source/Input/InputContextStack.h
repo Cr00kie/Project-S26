@@ -5,9 +5,12 @@
 #include "InputState.h"
 #include "InputContext.h"
 
+#include "../Lua/LuaBindingTools.h"
+
 
 class InputContextStack
 {
+
 	std::unordered_map<std::string, InputContext> m_contexts;
 	std::vector<std::string> m_stack;
 public:

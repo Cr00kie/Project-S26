@@ -2,6 +2,8 @@
 #include <list>
 #include <functional>
 
+#include "../Lua/LuaBindingTools.h"
+
 class TweenManager;
 
 //interpolates a value between a start and an end value in a given time,
@@ -61,6 +63,11 @@ private:
 	//Direction of the tween, 1 for forward, -1 for backward
 	float m_fDirection;
 
+	//Updates the tween,
+	//calculating the new interpolated value and calling the function with it.
+	void update();
+public:
+
 	//Constructor, initializes the tween and adds it to the tween manager
 	// Arguments:
 	//		- startValue: the initial value of the tween
@@ -71,24 +78,6 @@ private:
 	//		- delay: time to pass before starting to interpolate the values
 	//		- ease: type of interpolation to apply to the tween
 	Tween(float startValue, float destination, float duration, std::function<void(float)> callback, int repeat = 0, float delay = 0, Tween::ease ease = LINEAR);
-
-	//Updates the tween,
-	//calculating the new interpolated value and calling the function with it.
-	void update();
-public:
-	//makes a new tween returning a pointer to it
-	//Constructor, initializes the tween and adds it to the tween manager
-	// Arguments:
-	//		- startValue: the initial value of the tween
-	//		- destinationValue: the end value of the tween
-	//		- duration: the duration of the tween to interpolate from start to end
-	//      - callback: recieves the interpolated value and manages it
-	//		- delay: time to pass before starting to interpolate the values
-	//		- ease: type of interpolation to apply to the tween
-	static Tween* makeTween(float startValue, float destination, float duration, std::function<void(float)> callback, int repeat = 0, float delay = 0, Tween::ease ease = LINEAR) {
-		return new Tween(startValue, destination, duration, callback, repeat, delay, ease);
-	}
-
 	~Tween() = default;
 
 	//Finishes the tween,

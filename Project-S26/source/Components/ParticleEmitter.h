@@ -1,5 +1,4 @@
 #pragma once
-#include "UIElement.h"
 #include "SDL3/SDL.h"
 #include "../Math/Vec2.h"
 #include "../Math/Mat3.h"
@@ -31,10 +30,8 @@ struct Particle
     bool active;
 };
 
-class ParticleEmitter :
-    public UIElement
+struct ParticleEmitter
 {
-private:
     Texture* m_particleTexture;
     std::string m_particleTextureID;
 
@@ -55,24 +52,71 @@ private:
     std::size_t m_emissionAmount;
     float m_elapsed;
 
-public:
-    ParticleEmitter(float x, float y, std::size_t maxParticles, float emissionRate = 0.5f, bool startEmitting = false, std::size_t emissionAmount = 1) : 
-        UIElement(x, y), m_particlePool(maxParticles),
+    ParticleEmitter(std::size_t maxParticles, const std::string& particleId, float emissionRate = 0.5f, bool startEmitting = false, std::size_t emissionAmount = 1) : 
+        m_particlePool(maxParticles),
         m_spawnArea({0,0}),
         m_minVelocity(0,0), m_maxVelocity(0,0),
+        m_minAcceleration(0,0), m_maxAcceleration(0,0),
+        m_minAngularVel(0), m_maxAngularVel(0),
         m_minRotation(0), m_maxRotation(0),
         m_minScale(1), m_maxScale(1),
         m_minLifetime(1), m_maxLifetime(1),
         m_isEmitting(startEmitting), m_emissionRate(emissionRate), m_emissionAmount(emissionAmount), m_elapsed(0)
     {
-        setParticleTexture("square");
+        setParticleTexture(particleId);
     }
+
+    ParticleEmitter(ParticleEmitter&& other) noexcept :
+        m_particleTexture(other.m_particleTexture), m_particleTextureID(other.m_particleTextureID),
+        m_particlePool(std::move(other.m_particlePool)), m_activeParticles(std::move(other.m_activeParticles)),
+        m_spawnArea(other.m_spawnArea),
+        m_minVelocity(other.m_minVelocity), m_maxVelocity(other.m_maxVelocity),
+        m_minAcceleration(other.m_minAcceleration), m_maxAcceleration(other.m_maxAcceleration),
+        m_minAngularVel(other.m_minAngularVel), m_maxAngularVel(other.m_maxAngularVel),
+        m_minRotation(other.m_minRotation), m_maxRotation(other.m_maxRotation),
+        m_minScale(other.m_minScale), m_maxScale(other.m_maxScale),
+        m_minLifetime(other.m_minLifetime), m_maxLifetime(other.m_maxLifetime),
+        m_particleColor(other.m_particleColor),
+        m_isEmitting(other.m_isEmitting), m_emissionRate(other.m_emissionRate), m_emissionAmount(other.m_emissionAmount), m_elapsed(other.m_elapsed)
+    {
+        other.m_particleTexture = nullptr;
+        other.m_particleTextureID.clear();
+    }
+
     ~ParticleEmitter()
     {
-        ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_particleTextureID);
+        if(!m_particleTextureID.empty())
+            ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_particleTextureID);
     }
+    
     ParticleEmitter(const ParticleEmitter&) = delete;
-    ParticleEmitter(ParticleEmitter&&) = delete;
+    ParticleEmitter& operator=(ParticleEmitter&& other) noexcept
+    {
+        if (&other == this) return *this;
+
+        if (!m_particleTextureID.empty())
+            ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_particleTextureID);
+
+        m_particleTexture = other.m_particleTexture;
+        m_particleTextureID = other.m_particleTextureID;
+
+        m_particlePool = std::move(other.m_particlePool);
+        m_activeParticles = std::move(other.m_activeParticles);
+        m_spawnArea = other.m_spawnArea;
+        m_minVelocity = other.m_minVelocity; m_maxVelocity = other.m_maxVelocity;
+            m_minAcceleration = other.m_minAcceleration; m_maxAcceleration = other.m_maxAcceleration;
+        m_minAngularVel = other.m_minAngularVel; m_maxAngularVel = other.m_maxAngularVel;
+        m_minRotation = other.m_minRotation; m_maxRotation = other.m_maxRotation;
+        m_minScale = other.m_minScale; m_maxScale = other.m_maxScale;
+        m_minLifetime = other.m_minLifetime; m_maxLifetime = other.m_maxLifetime;
+        m_particleColor = other.m_particleColor;
+        m_isEmitting = other.m_isEmitting; m_emissionRate = other.m_emissionRate; m_emissionAmount = other.m_emissionAmount; m_elapsed = other.m_elapsed;
+
+        other.m_particleTexture = nullptr;
+        other.m_particleTextureID.clear();
+
+        return *this;
+    }
 
     inline void setSpawnArea(Vec2f area) { m_spawnArea = area/2; } // To avoid diving when emitting particles
 
@@ -96,9 +140,12 @@ public:
 
     inline void setParticleColor(SDL_Color color) { m_particleColor = color; }
 
-    inline void setParticleTexture(std::string id)
+    inline void setParticleTexture(const std::string& id)
     {
-        ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_particleTextureID);
+        if (id == m_particleTextureID) return;
+        
+        if(!m_particleTextureID.empty())
+            ServiceLocator::get<ResourceManager>().ReleaseResource<Texture>(m_particleTextureID);
 
         m_particleTextureID = id;
         m_particleTexture = ServiceLocator::get<ResourceManager>().GetResource<Texture>(m_particleTextureID);
@@ -109,10 +156,8 @@ public:
     inline void startEmitting() { m_isEmitting = true; }
     inline void stopEmitting() { m_isEmitting = false; }
     inline void setEmitting(bool emit) { m_isEmitting = emit; }
+    inline bool isEmitting() { return m_isEmitting; }
 
     void emit(std::size_t amount);
-
-    void update(float dt) override;
-    void render(const Mat3f& parentTransform) override;
 };
 

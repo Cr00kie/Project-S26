@@ -63,6 +63,7 @@ public:
 	static constexpr Mat3 scale(const Vec2<T>& v) { return scale(v.getX(), v.getY()); }
 
 	constexpr Vec2<T> getTranslation() const { return { _m[2], _m[5] }; }
+	constexpr Vec2<T> getScale() const { return { _m[0], _m[4] }; }
 	constexpr T getRotation() const { return std::atan2(_m[3], _m[0]); }
 	constexpr T getAngle() const { return getRotation() * (180.f / std::numbers::pi_v<float>); }
 

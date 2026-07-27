@@ -7,30 +7,16 @@
 #include "../Debug.h"
 #include "InputContextStack.h"
 #include "InputState.h"
+#include "../Tools/ServiceLocator.h"
 
-/*
-THINKING OF THE API
+#include "../Lua/LuaBindingTools.h"
 
-InputContext& ctx = inputManager.actions().createContext("Gameplay");
-ctx.createAction("fire", BUTTON)
-	.addBinding(KEY, SPACEBAR)
-	.addBinding(GAMEPAD, SOUTH)
-	.addBinding(MOUSE, CLICK);
-
-InputAction& moveAction = ctx.createAction("move", 1AXIS);
-moveAction.addBinding(KEY, A, 1.f)
-	.addBinding(KEY, D, -1.f)
-	.addBinding(GAMEPAD, LJOY, 1.f);
-
-ctx.createAction("camera", 2AXIS)
-	.addBinding(GAMEPAD, RJOY,  1.f, 0.8f);
-
-*/
-
+// TODO: add support to trigger input actions by pressing multiple buttons at the same time
 
 //Manages the input of the application,
 //storing it in a queue and sending it to the SceneManager when requested
 class InputManager {
+	LUA_EXPOSE_TYPE(InputManager, input, NO_CONSTRUCTOR, NO_BASE)
 public:
 	//Delete copy constructor and assignment operator to avoid copying the manager
 	InputManager& operator=(const InputManager&) = delete;
@@ -44,6 +30,7 @@ public:
 
 	InputContextStack& actions() { return m_inputContextStack; }
 	const InputState& state() { return m_currentInputState; }
+	LUA_EXPOSE_MEMBER(InputManager, state, state)
 
 private:
 	InputState m_currentInputState;

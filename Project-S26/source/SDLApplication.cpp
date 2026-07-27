@@ -3,12 +3,11 @@
 #include "Events/EventBus.h"
 #include "Tweens/TweenManager.h"
 #include "Audio/AudioManager.h"
-#include "Scenes/SceneManager.h"
 #include "Input/InputManager.h"
 #include "AppFacadeService.h"
+#include "Events/Event.h"
 #include "Debug.h"
-
-#include "Scenes/TestScene.h"
+#include "World.h"
 
 #include <SDL3/SDL.h>
 #include <memory>
@@ -101,25 +100,17 @@ void SDLApplication::run()
 {
 	INFO("Game loop started\n");
 
-	m_sceneManager->addScene("Front", new TestScene());
-
-	m_sceneManager->activateScene("Front", 0);
-
-	InputContext& context = m_inputManager->actions().createContext("gameplay");
-	context.createAction("fire", 0)
-		.addBinding(Left)
-		.addBinding(SDL_SCANCODE_SPACE)
-		.addBinding(SDL_GAMEPAD_BUTTON_SOUTH);
-
-	context.createAction("move", 0, 0.2f)
-		.addBinding(SDL_SCANCODE_A, -1)
-		.addBinding(SDL_SCANCODE_D, 1)
-		.addBinding(SDL_SCANCODE_W, 0, 1)
-		.addBinding(SDL_SCANCODE_S, 0, -1)
-		.addBinding(SDL_GAMEPAD_AXIS_LEFTX, 1, 0)
-		.addBinding(SDL_GAMEPAD_AXIS_LEFTY, 0, 1);
-
-	m_inputManager->actions().pushActiveContext("gameplay");
+	Entity e = m_world->registry().create();
+	m_world->registry().emplace<Transform>(e, 500, 500);
+	m_world->registry().emplace<Hierarchy>(e);
+	m_world->registry().emplace<Interactive>(e);
+	m_world->registry().emplace<Bounds>(e, 800, 100);
+	m_world->registry().emplace<SpriteRenderable>(e, IMAGE, "square", 100.f, 100.f);
+	m_world->registry().emplace<Text>(e, "<c 255, 0, 0, 255> Hola, esto es una prueba", "NunitoSans");
+	m_world->registry().emplace<SpriteAnimator>(e, "buttonAnim");
+	m_world->registry().emplace<Script>(e, "./assets/Scripts/scriptTest.lua");
+	ParticleEmitter& em = m_world->registry().emplace<ParticleEmitter>(e,  500, "star");
+	
 
 	uint64_t lastTime = SDL_GetTicks();
 	while (m_bIsRunning)
@@ -127,18 +118,7 @@ void SDLApplication::run()
 		uint64_t currentTime = SDL_GetTicks();
 		float deltaTime = (currentTime - lastTime) / 1000.0f;
 		lastTime = currentTime;
-
 		handleEvents();
-
-		if (m_inputManager->actions().getContext("gameplay").getAction("fire").justReleased())
-		{
-			LOG("FIRE PRESSED\n");
-		}
-		Vec2f val = m_inputManager->actions().getContext("gameplay").getAction("move").readVec2f();
-		if (val.getX() || val.getY())
-		{
-			LOG("MOVE VALUE: " + std::to_string(val.getX()) + ", " +std::to_string(val.getY()) + "\n");
-		}
 		update(deltaTime);
 		render();
 
@@ -178,24 +158,29 @@ void SDLApplication::initGlobalServices()
 	ServiceLocator::registerService(new TweenManager());
 	INFO("Tween manager initialized\n");
 
+	// Register LuaManager as global service
+	ServiceLocator::registerService(new LuaManager());
+	INFO("Lua manager initialized\n");
+
 	// Register AppFacadeService as global service
 	ServiceLocator::registerService(new AppFacadeService(this));
 	INFO("App facade initialized\n");
 
-	// Register SceneManager as global service
-	m_sceneManager = new SceneManager();
-	ServiceLocator::registerService(m_sceneManager);
-	INFO("Scene manager initialized\n");
+	// Create component registry and world
+	Registry* reg = new Registry();
+	ServiceLocator::registerService(reg);
+	m_world = new World(reg);
+	INFO("World initialized\n");
 }
 
 void SDLApplication::handleEvents() {
 	m_inputManager->handleInputs();
-	m_sceneManager->processInput(m_inputManager->state());
+	m_world->processInput(m_inputManager->state());
 }
 
 void SDLApplication::update(float deltaTime)
 {
-	m_sceneManager->update(deltaTime);
+	m_world->update(deltaTime);
 
 	TweenManager* t = ServiceLocator::tryGet<TweenManager>();
 	if (t) t->update();
@@ -208,7 +193,7 @@ void SDLApplication::render()
 	SDL_RenderClear(m_pRenderer);
 
 	// Render scenes
-	m_sceneManager->render();
+	m_world->render();
 	m_debug->render();
 	
 	//m_SceneManager->render();
@@ -218,7 +203,8 @@ void SDLApplication::render()
 void SDLApplication::quit()
 {
 	INFO("App quitted\n");
-	ServiceLocator::unregister<SceneManager>();
+
+	delete m_world;
 
 	// Clear Event Bus events
 	EventBus* eb = ServiceLocator::tryGet<EventBus>();

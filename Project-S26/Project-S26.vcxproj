@@ -97,7 +97,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;$(SolutionDir)lib\lua-5.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,7 +115,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;$(SolutionDir)lib\lua-5.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,13 +133,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;$(SolutionDir)lib\lua-5.4.8\include;$(SolutionDir)lib\sol-3.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL3_image-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_mixer-3.1.2\lib\$(Platform);$(SolutionDir)lib\SDL3-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_ttf-3.2.2\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;liblua54.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL3_image-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_mixer-3.1.2\lib\$(Platform);$(SolutionDir)lib\SDL3-3.4.0\lib\$(Platform);$(SolutionDir)lib\lua-5.4.8;$(SolutionDir)lib\SDL3_ttf-3.2.2\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,18 +151,27 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\SDL3-3.4.0\include;$(SolutionDir)lib\SDL3_ttf-3.2.2\include;$(SolutionDir)lib\SDL3_mixer-3.1.2\include;$(SolutionDir)lib\SDL3_image-3.4.0\include;$(SolutionDir)lib\JSON;$(SolutionDir)lib\lua-5.4.8\include;$(SolutionDir)lib\sol-3.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL3_image-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_mixer-3.1.2\lib\$(Platform);$(SolutionDir)lib\SDL3-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_ttf-3.2.2\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;liblua54.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL3_image-3.4.0\lib\$(Platform);$(SolutionDir)lib\SDL3_mixer-3.1.2\lib\$(Platform);$(SolutionDir)lib\SDL3-3.4.0\lib\$(Platform);$(SolutionDir)lib\lua-5.4.8;$(SolutionDir)lib\SDL3_ttf-3.2.2\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Lua\ComponentHandles\BoundsHandle.cpp" />
+    <ClCompile Include="source\Lua\ComponentHandles\HierarchyHandle.cpp" />
+    <ClCompile Include="source\Lua\ComponentHandles\ParticleEmitterHandle.cpp" />
+    <ClCompile Include="source\Lua\ComponentHandles\SpriteAnimatorHandle.cpp" />
+    <ClCompile Include="source\Lua\ComponentHandles\SpriteRenderableHandle.cpp" />
+    <ClCompile Include="source\Lua\ComponentHandles\TextHandle.cpp" />
+    <ClCompile Include="source\Lua\ComponentHandles\TransformHandle.cpp" />
+    <ClCompile Include="source\Lua\LuaManager.cpp" />
+    <ClCompile Include="source\Entities\EntityManager.cpp" />
     <ClCompile Include="source\Input\InputContext.cpp" />
     <ClCompile Include="source\Input\InputSource.cpp" />
     <ClCompile Include="source\Input\InputState.cpp" />
@@ -170,7 +179,7 @@
     <ClCompile Include="source\Input\InputContextStack.cpp" />
     <ClCompile Include="source\Events\EventChannel.cpp" />
     <ClCompile Include="source\UI\Slider.cpp" />
-    <ClCompile Include="source\UI\ParticleEmitter.cpp" />
+    <ClCompile Include="source\Components\ParticleEmitter.cpp" />
     <ClCompile Include="source\Resources\Animation.cpp" />
     <ClCompile Include="source\Resources\ResourceLoaders\AnimationLoader.cpp" />
     <ClCompile Include="source\Math\Mat3.cpp" />
@@ -190,22 +199,49 @@
     <ClCompile Include="source\SDLApplication.cpp" />
     <ClCompile Include="source\Tweens\Tween.cpp" />
     <ClCompile Include="source\Tweens\TweenManager.cpp" />
-    <ClCompile Include="source\UI\TextLabel.cpp" />
-    <ClCompile Include="source\UI\UIElement.cpp" />
-    <ClCompile Include="source\UI\Sprite.cpp" />
-    <ClCompile Include="source\Tweens\SpriteAnimator.cpp" />
+    <ClCompile Include="source\Components\SpriteAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Lua\ComponentHandles\BaseComponentHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\BoundsHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\HierarchyHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\ParticleEmitterHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\SpriteAnimatorHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\SpriteRenderableHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\TextHandle.h" />
+    <ClInclude Include="source\Lua\ComponentHandles\TransformHandle.h" />
+    <ClInclude Include="source\Lua\LuaBindingTools.h" />
+    <ClInclude Include="source\Lua\LuaManager.h" />
+    <ClInclude Include="source\Components\Bounds.h" />
+    <ClInclude Include="source\Components\Hierarchy.h" />
+    <ClInclude Include="source\Components\Interactive.h" />
+    <ClInclude Include="source\Components\Script.h" />
+    <ClInclude Include="source\Components\SpriteRenderable.h" />
+    <ClInclude Include="source\Components\Text.h" />
+    <ClInclude Include="source\Components\TextLayout.h" />
+    <ClInclude Include="source\Components\Transform.h" />
+    <ClInclude Include="source\Entities\ComponentSparseSet.h" />
+    <ClInclude Include="source\Entities\Registry.h" />
+    <ClInclude Include="source\Entities\EntityManager.h" />
+    <ClInclude Include="source\Entities\Entity.h" />
     <ClInclude Include="source\Input\InputContext.h" />
     <ClInclude Include="source\Input\InputSource.h" />
     <ClInclude Include="source\Input\InputState.h" />
     <ClInclude Include="source\Input\InputAction.h" />
     <ClInclude Include="source\Input\InputContextStack.h" />
     <ClInclude Include="source\Events\EventChannel.h" />
+    <ClInclude Include="source\Systems\InputSystem.h" />
+    <ClInclude Include="source\Systems\ParticleSystem.h" />
+    <ClInclude Include="source\Systems\ScriptSystem.h" />
+    <ClInclude Include="source\Systems\SpriteAnimationSystem.h" />
+    <ClInclude Include="source\Systems\SpriteRenderSystem.h" />
+    <ClInclude Include="source\Systems\TextLayoutSystem.h" />
+    <ClInclude Include="source\Systems\TextRenderSystem.h" />
+    <ClInclude Include="source\Systems\TransformSystem.h" />
     <ClInclude Include="source\UI\Slider.h" />
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\Tools\ObjectPool.h" />
-    <ClInclude Include="source\UI\ParticleEmitter.h" />
+    <ClInclude Include="source\Components\ParticleEmitter.h" />
     <ClInclude Include="source\Resources\Animation.h" />
     <ClInclude Include="source\Resources\ResourceLoaders\AnimationLoader.h" />
     <ClInclude Include="source\Events\ElementEventSystem.h" />
@@ -232,17 +268,15 @@
     <ClInclude Include="source\Tools\ServiceLocator.h" />
     <ClInclude Include="source\Tweens\Tween.h" />
     <ClInclude Include="source\Tweens\TweenManager.h" />
-    <ClInclude Include="source\UI\TextLabel.h" />
-    <ClInclude Include="source\UI\UIElement.h" />
     <ClInclude Include="source\Math\Vec2.h" />
     <ClInclude Include="source\Math\Vec3.h" />
-    <ClInclude Include="source\UI\Sprite.h" />
-    <ClInclude Include="source\Scenes\TestScene.h" />
-    <ClInclude Include="source\Tweens\SpriteAnimator.h" />
+    <ClInclude Include="source\Components\SpriteAnimator.h" />
+    <ClInclude Include="source\World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Animations\buttonTexAnim.anim" />
     <None Include="assets\Animations\spriteSheetAnim.anim" />
+    <None Include="assets\Scripts\scriptTest.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

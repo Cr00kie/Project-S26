@@ -4,9 +4,11 @@
 #include <string>
 #include "../Math/Vec2.h"
 #include "InputSource.h"
+#include "../Lua/LuaBindingTools.h"
 
 class InputAction
 {
+	LUA_EXPOSE_TYPE(InputAction, InputAction, NO_CONSTRUCTOR, NO_BASE)
 private:
 	std::vector<InputSource> xBindings; // Used for buttons and single axis
 	std::vector<InputSource> yBindings; // Used for x and y axis

@@ -23,6 +23,10 @@
     {
       "id": "btnNormal",
       "path": "assets/Images/Button Normal.png"
+    },
+    {
+      "id": "star",
+      "path": "assets/Images/star.png"
     }
   ],
   "Animations": [
@@ -35,7 +39,12 @@
       "path": "assets/Animations/spriteSheetAnim.anim"
     }
   ],
-  "Sounds": [],
+  "Sounds": [
+    {
+      "id": "test_sound",
+      "path": "assets/Sounds/Error.wav"
+    }
+  ],
   "Fonts": [
     {
       "id" : "NunitoSans",
